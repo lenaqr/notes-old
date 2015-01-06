@@ -57,6 +57,10 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
+    create [".git"] $ do
+        route idRoute
+        compile $ makeItem ("gitdir: ../_site.git" :: String)
+
     match "templates/*" $ compile templateCompiler
 
 
