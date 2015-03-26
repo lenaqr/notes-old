@@ -1,21 +1,35 @@
+@font-face {
+    font-family: "Merriweather";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Merriweather"), url("http://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EOgdm0LZdjqr5-oayXSOefg.woff2") format("woff2"), url("http://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EHhCUOGz7vYGh680lGh-uXM.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Inconsolata'), url(http://fonts.gstatic.com/s/inconsolata/v10/BjAYBlHtW3CJxDcjzrnZCI4P5ICox8Kq3LLUNMylGO4.woff2) format('woff2'), url(http://fonts.gstatic.com/s/inconsolata/v10/BjAYBlHtW3CJxDcjzrnZCIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
 body {
-    color: black;
-    font-size: 16px;
+    color: #333;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 18px;
     margin: 0px auto 0px auto;
-    width: 600px;
+    width: 640px;
 }
 
 div#header {
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid #363;
     margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
 }
 
 div#logo a {
-    color: black;
+    color: #363;
     float: left;
     font-size: 18px;
-    font-weight: bold;
     text-decoration: none;
 }
 
@@ -24,17 +38,20 @@ div#header #navigation {
 }
 
 div#header #navigation a {
-    color: black;
+    color: #363;
     font-size: 18px;
-    font-weight: bold;
     margin-left: 12px;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: lowercase;
+}
+
+div#header #navigation a:hover {
+    color: #696;
 }
 
 div#footer {
-    border-top: solid 2px black;
-    color: #555;
+    border-top: 1px solid #363;
+    color: #363;
     font-size: 12px;
     margin-top: 30px;
     padding: 12px 0px 12px 0px;
@@ -42,15 +59,38 @@ div#footer {
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 24px;
+}
+
+h1.title {
+    text-align: center;
 }
 
 div.info {
-    color: #555;
+    color: #363;
     font-size: 14px;
     font-style: italic;
+    text-align: center;
+}
+
+a {
+    color: #696;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #9c9;
+}
+
+pre, code {
+    font-family: "Inconsolata", monospace;
+    font-size: 18px;
+}
+
+pre {
+    margin-left: 18px;
 }
