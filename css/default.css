@@ -16,6 +16,7 @@ body {
     color: #333;
     font-family: "Merriweather", Georgia, serif;
     font-size: 18px;
+    line-height: 1.5;
     margin: 0px auto 0px auto;
     width: 640px;
 }
