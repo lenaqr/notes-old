@@ -2,4 +2,4 @@
 title: Home
 ---
 
-Hi! Welcome to my website. It's still under construction, so there isn't much here yet.
+Hi! Welcome to my website. I might put more things here someday, but for now you may want one of the links in the top bar.
