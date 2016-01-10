@@ -18,7 +18,8 @@ body {
     font-size: 18px;
     line-height: 1.5;
     margin: 0px auto 0px auto;
-    width: 640px;
+    padding: 0px 1em 0px 1em;
+    max-width: 640px;
 }
 
 div#header {
