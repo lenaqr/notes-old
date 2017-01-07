@@ -11,7 +11,7 @@ The website of the [MIT Educational Studies Program](https://esp.mit.edu) handle
 ## ArgCache
 
 Originally a submodule of the ESP website, [ArgCache](https://github.com/luac/django-argcache) is a caching framework for Django projects which I recently (2015) inherited and refactored into a reusable package.
-It provides a unique approach to cache invalidation: you declare how your cached functions depend on your database tables, and the framework takes care of        expiring cache entries automatically when it determines they've gone stale.
+It provides a unique approach to cache invalidation: you declare how your cached functions depend on your database tables, and the framework takes care of expiring cache entries automatically when it determines they've gone stale.
 
 Unfortunately, the documentation is ancient and the code is mildly terrifying, but I'm working on cleaning it up.
 
