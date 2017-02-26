@@ -2,7 +2,7 @@
 title: How I Set Up This Site
 ---
 
-*Update (2017): The [Hakyll tutorial][hakyll-tutorial] now has instructions for using `stack` instead of `cabal-install`, which I think is more currently-recommended, so whenever this post talks about cabal you should probably follow what the tutorial says instead.*
+*Update (2017): The [Hakyll tutorial][hakyll-tutorial] now has instructions for using `stack` instead of `cabal-install`, which I think is more currently-recommended, so whenever this post talks about cabal you should probably follow what the tutorial says instead. Also [this post][dr-hakyll] linked from the Hakyll website is probably a better story for deploying to GitHub Pages than mine.*
 
 This website is written in Markdown, built with [Hakyll][hakyll], and hosted with [GitHub Pages][gh-pages]. In case it interests anyone else, this is how I got started.
 
@@ -149,3 +149,4 @@ In addition to the official docs for Hakyll and GitHub pages, I found the follow
 [begriffs]: http://begriffs.com/posts/2014-08-12-create-static-site-with-hakyll-github.html
 [chromaticleaves]: http://chromaticleaves.com/posts/cabal-sandbox-workflow.html
 [funloop]: http://funloop.org/post/2013-01-11-using-hakyll.html
+[dr-hakyll]: https://www.stackbuilders.com/news/dr-hakyll-create-a-github-page-with-hakyll-and-circleci
