@@ -57,8 +57,8 @@ $ cabal run build
 Package has never been configured. Configuring with default flags. If this
 fails, please run configure manually.
 Resolving dependencies...
-Configuring luac-github-io-0.1.0.0...
-Preprocessing executable 'site' for luac-github-io-0.1.0.0...
+Configuring luanthe-github-io-0.1.0.0...
+Preprocessing executable 'site' for luanthe-github-io-0.1.0.0...
 [1 of 1] Compiling Main             ( site.hs, dist/build/site/site-tmp/Main.o )
 Linking dist/build/site/site ...
 Running site...
@@ -89,12 +89,12 @@ This generates the static files for the site in the `_site` directory.
 
 ## Deploying to GitHub Pages
 
-Since I want to deploy the site to GitHub Pages, I create a repository named `luac.github.io` on GitHub, point the `_site` directory to a checkout of it, and push:
+Since I want to deploy the site to GitHub Pages, I create a repository named `luanthe.github.io` on GitHub, point the `_site` directory to a checkout of it, and push:
 
 ```
 $ cd _site
 $ git init
-$ git remote add origin https://github.com/luac/luac.github.io
+$ git remote add origin https://github.com/luanthe/luanthe.github.io
 $ git add --all
 $ git commit -m "Initial commit"
 $ git push origin master
