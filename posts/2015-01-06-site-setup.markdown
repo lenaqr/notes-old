@@ -2,6 +2,8 @@
 title: How I Set Up This Site
 ---
 
+*Update (2017): The [Hakyll tutorial][hakyll-tutorial] now has instructions for using `stack` instead of `cabal-install`, which I think is more currently-recommended, so whenever this post talks about cabal you should probably follow what the tutorial says instead.*
+
 This website is written in Markdown, built with [Hakyll][hakyll], and hosted with [GitHub Pages][gh-pages]. In case it interests anyone else, this is how I got started.
 
 ## Cabal sandbox
