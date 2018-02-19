@@ -17,7 +17,7 @@ Unfortunately, the documentation is ancient and the code is mildly terrifying, b
 
 ## Randometer
 
-Humans have a tendency to see false patterns in random data. I wrote a [webapp version](http://web.mit.edu/lua/Public/randometer/) of Nate Soares' [Randometer](http://mindingourway.com/randometer/), a set of games for training intuition for what true randomness looks like. Try it yourself and test how well you can distinguish patterns from random noise.
+Humans have a tendency to see false patterns in random data. I wrote a [webapp version](https://luanthe.github.io/randometer/) of Nate Soares' [Randometer](http://mindingourway.com/randometer/), a set of games for training intuition for what true randomness looks like. Try it yourself and test how well you can distinguish patterns from random noise.
 
 ## zScore
 
