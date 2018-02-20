@@ -1,0 +1,116 @@
+@font-face {
+    font-family: "Merriweather";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Merriweather"), url("http://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EOgdm0LZdjqr5-oayXSOefg.woff2") format("woff2"), url("http://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EHhCUOGz7vYGh680lGh-uXM.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Inconsolata'), url(http://fonts.gstatic.com/s/inconsolata/v10/BjAYBlHtW3CJxDcjzrnZCI4P5ICox8Kq3LLUNMylGO4.woff2) format('woff2'), url(http://fonts.gstatic.com/s/inconsolata/v10/BjAYBlHtW3CJxDcjzrnZCIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+body {
+    color: #333;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0px auto 0px auto;
+    padding: 0px 1em 0px 1em;
+    max-width: 640px;
+}
+
+#header {
+    border-bottom: 1px solid #363;
+    margin-bottom: 30px;
+    padding: 12px 0px 12px 0px;
+}
+
+#logo a {
+    color: #363;
+    float: left;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+#header #navigation {
+    text-align: right;
+}
+
+#header #navigation a {
+    color: #363;
+    font-size: 18px;
+    margin-left: 12px;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+#header #navigation a:hover {
+    color: #696;
+}
+
+#footer {
+    display: block;
+    border-top: 1px solid #363;
+    color: #363;
+    font-size: 12px;
+    margin-top: 30px;
+    padding: 12px 0px 12px 0px;
+    text-align: right;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h1.page-title {
+    text-align: center;
+}
+
+h1.entry-title a {
+    color: #333;
+}
+
+h1.entry-title a:hover {
+    color: #363;
+}
+
+.post-info {
+    color: #363;
+    font-size: 14px;
+    font-style: italic;
+    text-align: right;
+}
+
+a {
+    color: #696;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #9c9;
+}
+
+pre, code {
+    font-family: "Inconsolata", monospace;
+    font-size: 18px;
+}
+
+pre {
+    margin-left: 18px;
+}
+
+.figure {
+    text-align: center;
+}
+
+.figure .caption {
+    font-size: 14px;
+    margin-top: 0;
+}

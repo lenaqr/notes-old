@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Anthony Lu'
+AUTHOR = ''
 SITENAME = 'Anthony Lu'
 SITEURL = ''
 
@@ -33,3 +33,23 @@ DEFAULT_PAGINATION = False
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+ARTICLE_URL = '{slug}/'
+ARTICLE_SAVE_AS = '{slug}/index.html'
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
+CATEGORY_URL = ''
+CATEGORY_SAVE_AS = ''
+TAG_URL = ''
+TAG_SAVE_AS = ''
+AUTHOR_URL = ''
+AUTHOR_SAVE_AS = ''
+ARCHIVES_SAVE_AS = ''
+AUTHORS_SAVE_AS = ''
+CATEGORIES_SAVE_AS = ''
+TAGS_SAVE_AS = ''
+INDEX_SAVE_AS = ''
+
+DEFAULT_DATE_FORMAT = '%B %Y'
+
+THEME = './theme'
