@@ -53,3 +53,8 @@ INDEX_SAVE_AS = ''
 DEFAULT_DATE_FORMAT = '%B %Y'
 
 THEME = './theme'
+
+PLUGIN_PATHS = ['./pelican-plugins']
+PLUGINS = ["render_math"]
+
+TYPOGRIFY = True

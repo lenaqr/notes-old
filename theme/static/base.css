@@ -108,9 +108,11 @@ pre {
 
 .figure {
     text-align: center;
+    font-size: 14px;
 }
 
-.figure .caption {
-    font-size: 14px;
-    margin-top: 0;
+sup {
+    vertical-align: baseline;
+    position: relative;
+    top: -0.5em;
 }
