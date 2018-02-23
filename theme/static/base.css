@@ -107,8 +107,14 @@ pre {
 }
 
 .figure {
-    text-align: center;
     font-size: 14px;
+    text-align: center;
+    margin: 18px;
+}
+
+.figure img {
+    display: block;
+    margin: 0 auto;
 }
 
 sup {
