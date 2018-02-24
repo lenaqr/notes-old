@@ -1,5 +1,5 @@
 ----
-title: Priors and Regularizers
+title: Regularizers Are Not Priors
 slug: not-priors
 date: 2018-02-22
 ----
