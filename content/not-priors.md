@@ -106,3 +106,13 @@ Machine learning researchers have been trying to do this! Here are some blog pos
 * Probability distributions have to sum up to one. This relates to the previous point. Sometimes this doesn't matter but sometimes it forces you to not assign more probability mass than you have. Compared to inventing a loss function out of thin air, sticking to a probabilistic framework feels to me like almost a form of type checking that rules out some things that obviously make no sense.
 
 I hope I've managed to convey that Bayesian modeling really does bring more to the table and it's not just the same as an additional term on your loss function. I often find the Bayesian answers intuitively pleasing; I'm not saying it's the appropriate tool for every problem, but it's certainly worth learning more about.
+
+---
+
+Edit (April 2018): Here's a [post from raginrayguns on tumblr][raginrayguns] that makes a similar point.
+
+> tl;dr: Regularization is not the point of the prior. Even when we’re not regularizing, the prior is an indispensable part of useful machinery for producing “hedged” estimates, which are good in all plausible worlds.
+
+[raginrayguns]: http://raginrayguns.tumblr.com/post/163079571377/bayes-a-kinda-sorta-masterpost
+
+The post makes a case for why you might want to do the Bayesian thing, which I didn't really say anything about here. It has an example of an estimation problem where using Bayesian reasoning produces a better estimator (according to a specified loss function, which happens to be mean squared error) than maximum likelihood, even with a flat prior.
