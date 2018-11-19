@@ -34,12 +34,13 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-ARTICLE_URL = '{slug}/'
-ARTICLE_SAVE_AS = '{slug}/index.html'
+USE_FOLDER_AS_CATEGORY = True
+ARTICLE_URL = '{category}/{slug}/'
+ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
 PAGE_URL = '{slug}/'
 PAGE_SAVE_AS = '{slug}/index.html'
-CATEGORY_URL = ''
-CATEGORY_SAVE_AS = ''
+CATEGORY_URL = '{slug}/'
+CATEGORY_SAVE_AS = '{slug}/index.html'
 TAG_URL = ''
 TAG_SAVE_AS = ''
 AUTHOR_URL = ''
@@ -51,6 +52,8 @@ TAGS_SAVE_AS = ''
 INDEX_SAVE_AS = ''
 
 DEFAULT_DATE_FORMAT = '%B %Y'
+
+SUMMARY_MAX_LENGTH = None
 
 THEME = './theme'
 

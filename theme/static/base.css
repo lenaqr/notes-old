@@ -69,15 +69,11 @@ h2 {
     font-size: 24px;
 }
 
-h1.entry-title {
-    text-align: center;
-}
-
-h1.entry-title a {
+.entry-title a {
     color: #333;
 }
 
-h1.entry-title a:hover {
+.entry-title a:hover {
     color: #363;
 }
 
@@ -86,6 +82,10 @@ h1.entry-title a:hover {
     font-size: 14px;
     font-style: italic;
     text-align: right;
+}
+
+#post-list {
+    list-style: none;
 }
 
 a {
