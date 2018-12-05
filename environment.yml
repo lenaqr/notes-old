@@ -1,0 +1,11 @@
+name: luanthe-github-io
+channels:
+  - defaults
+dependencies:
+  - python==3.7.1
+  - pip==18.1
+  - pip:
+    - pelican==4.0.1
+    - ghp-import==0.5.5
+    - markdown==3.0.1
+    - typogrify==2.0.7
