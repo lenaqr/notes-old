@@ -1,0 +1,10 @@
+language: python
+python:
+  - '3.7'
+branches:
+  only:
+    - source
+install:
+  - pip install pelican markdown typogrify ghp-import
+script:
+  - make publish github
