@@ -28,4 +28,9 @@ is for everything else.
 Next I'd like to take one of the standalone examples in Edward2 and rewrite it
 in Pyro.
 
-[probtorch]: https://github.com/probtorch/probtorch
+Update: I obviously never got back to this, but [someone else did something
+similar][colcarroll] with many frameworks. It's more aimed toward the common use
+patterns of each API, whereas I would've liked to do examples digging into some
+lower level details, but that's a task for another day.
+
+[colcarroll]: https://colcarroll.github.io/ppl-api/
