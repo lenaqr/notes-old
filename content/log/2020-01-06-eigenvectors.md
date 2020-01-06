@@ -5,7 +5,7 @@ Title: Eigenvectors from eigenvalues
 [quanta]: https://www.quantamagazine.org/neutrinos-lead-to-unexpected-discovery-in-basic-math-20191113/
 [tao]: https://terrytao.wordpress.com/2019/08/13/eigenvectors-from-eigenvalues/
 
-I was trying to develop some intuition for this result and I initially found it hard to read and understand the proofs, but after some studying I think I get it. I've written a quick explanation below; I think this would be much improved with pictures, but I don't want to figure that out right now. Maybe another time.
+I was trying to develop some intuition for this result and I initially found the proofs hard to read and understand, but after some studying I think I get it. I've written a quick explanation below; I think this would be much improved with pictures, but I don't want to figure that out right now. Maybe another time.
 
 Suppose $A$ is a covariance matrix. Let $\lambda$ be the largest eigenvalue of $A$, with eigenvector $v$. We know $\lambda$ and we'd like to learn about $v$.
 
