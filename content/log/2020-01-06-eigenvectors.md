@@ -7,7 +7,7 @@ Title: Eigenvectors from eigenvalues
 
 I was trying to develop some intuition for this result and I initially found it hard to read and understand the proofs, but after some studying I think I get it. I've written a quick explanation below; I think this would be much improved with pictures, but I don't want to figure that out right now. Maybe another time.
 
-Suppose $A$ is a covariance matrix. Let $lambda$ be the smallest eigenvalue of $A$, with eigenvector $v$. We know $\lambda$ and we'd like to learn about $v$.
+Suppose $A$ is a covariance matrix. Let $\lambda$ be the smallest eigenvalue of $A$, with eigenvector $v$. We know $\lambda$ and we'd like to learn about $v$.
 
 Let's subtract $\lambda I$ from the matrix $A$. This has the effect of shrinking the variance in each direction by $\lambda$. In particular, the variance becomes zero in the $v$ direction.
 
