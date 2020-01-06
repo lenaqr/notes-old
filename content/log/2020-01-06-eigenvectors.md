@@ -13,9 +13,9 @@ Consider $\lambda I - A$ as a covariance matrix. Its variance in each direction 
 
 Now if we look at this flat ellipse from the $j$-th coordinate direction, how big is its "silhouette"? That is, what is the area of the projection of the ellipse onto the $j$-th coordinate plane?
 
-If the $j$-th axis is parallel to $v$, then it's like looking at a pancake head-on: the area of the projection is maximized. But if the $j$-th axis is perpendicular to $v$, then it's like looking at a pancake sideways: the area of the projection is zero.
+If the $j$-th axis is parallel to $v$, then it's like looking at a pancake head-on: the area of the projection is the area of the whole ellipse. But if the $j$-th axis is perpendicular to $v$, then it's like looking at a pancake sideways: the area of the projection is zero.
 
-In general we have a linear combination of these two cases, so we can figure out the component of $v$ that is along the $j$-th axis by taking the ratio of observed area to maximum area. And that's effectively what the eigenvectors-from-eigenvalues formula does.
+In general we have a linear combination of these two cases, so we can figure out the component of $v$ that is along the $j$-th axis by taking the ratio of projected area to total area. And that's effectively what the eigenvectors-from-eigenvalues formula does.
 
 (This geometric interpretation only works with the largest eigenvalue, because variances and areas have to be positive, but the math works out regardless.)
 
