@@ -31,46 +31,9 @@ plt.axhline(0, color='black')
 plt.axvline(0, color='black')
 ```
 
-became
-
-```
-plot(Math.log1p, -0.5, 0.5)
-
-function plot(f, a, b) {
-  return vegalite({
-    width: 360,
-    height: 240,
-    layer: [
-      {
-        data: { 
-          values: linspace(a, b, 50).map(x => ({ x, y: f(x) }))
-        },
-        mark: "line",
-        encoding: {
-          x: { field: "x" },
-          y: { field: "y" },
-        }
-      },
-      {
-        data: { values: [ { x: 0 } ] },
-        mark: "rule",
-        encoding: {
-          x: { field: "x" },
-        }
-      },
-      {
-        data: { values: [ { y: 0 } ] },
-        mark: "rule",
-        encoding: {
-          y: { field: "y" },
-        }
-      }
-    ]
-  });
-}
-```
+became a 15+ line JSON description of how to render the plot.
 
 I mean, okay, this is fine. Vega-Lite is (I think?) designed for web documents
 that are rendered over and over again, so it makes sense that it makes you
 specify plots using a more explicit, declarative style. And at least I can put
-most of this plot spec into a function that I can reuse throughout the notebook.
+most of the plot options into a function that I can reuse throughout a notebook.
