@@ -5,6 +5,13 @@ branches:
   only:
     - source
 install:
-  - pip install pelican markdown typogrify ghp-import
+  - pip install pelican markdown typogrify
 script:
-  - make publish github
+  - make publish
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: master
