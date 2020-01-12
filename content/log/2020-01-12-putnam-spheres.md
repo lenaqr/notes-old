@@ -6,7 +6,7 @@ Title: Putnam spheres
 
 My coworkers were discussing this problem and its generalization: what about in R^n?
 
----
+<!-- PELICAN_END_SUMMARY -->
 
 We think that the answer is yes for all n, and that it's enough for f to be an axis-aligned plane wave, that is f(x, y, z, ...) = cos(kx) for some frequency k.
 
