@@ -58,6 +58,6 @@ SUMMARY_MAX_LENGTH = None
 THEME = './theme'
 
 PLUGIN_PATHS = ['./pelican-plugins']
-PLUGINS = ["render_math"]
+PLUGINS = ["render_math", "summary"]
 
 TYPOGRIFY = True
