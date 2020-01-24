@@ -7,8 +7,6 @@ Title: Eigenvectors from eigenvalues
 
 I was trying to develop some intuition for this result and I initially found the proofs hard to read and understand, but after some studying I think I get it. I've written a quick explanation below; I think this would be much improved with pictures, but I don't want to figure that out right now. Maybe another time.
 
-<!-- PELICAN_END_SUMMARY -->
-
 Suppose $A$ is a covariance matrix. Let $\lambda$ be the largest eigenvalue of $A$, with eigenvector $v$. We know $\lambda$ and we'd like to learn about $v$.
 
 Consider $\lambda I - A$ as a covariance matrix. Its variance in each direction is $\lambda$ minus the variance that $A$ has in that direction. In particular, it has zero variance in the $v$ direction. If you imagine samples from a Gaussian distribution with covariance $\lambda I - A$, it'll be a point cloud shaped like a flat ellipse that is perpendicular to $v$.
