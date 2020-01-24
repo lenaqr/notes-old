@@ -5,7 +5,7 @@ branches:
   only:
     - source
 install:
-  - pip install pelican markdown typogrify
+  - pip install pelican markdown typogrify beautifulsoup4
 script:
   - make publish
 deploy:
