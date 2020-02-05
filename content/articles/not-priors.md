@@ -30,7 +30,7 @@ However, this problem may produce an overfit solution or even be underdetermined
 
 Regularized least squares is when you add an extra term that depends on $\theta$ in order to constrain the solution and make the problem more well behaved. One common form of this is L2 regularization or ridge regression, which adds a penalty term on the L2 norm of $\theta$:
 
-$$ \hat \theta_{RLS} = \arg \min_\theta \left( \sum_i (y_i - f(x_i; \theta))^2 + \Vert\theta\Vert^2 \right) $$
+$$ \hat \theta_{Ridge} = \arg \min_\theta \left( \sum_i (y_i - f(x_i; \theta))^2 + \Vert\theta\Vert^2 \right) $$
 
 This can make sense if $\theta$ is a vector of coefficients; it can discourage large coefficients that happen to cancel out near the observed data points, such as in the intro figure.
 
@@ -105,7 +105,7 @@ Machine learning researchers have been trying to do this! Here are some blog pos
 
 * Probability distributions have to sum up to one. This relates to the previous point. Sometimes this doesn't matter but sometimes it forces you to not assign more probability mass than you have. Compared to inventing a loss function out of thin air, sticking to a probabilistic framework feels to me like almost a form of type checking that rules out some things that obviously make no sense.
 
-I hope I've managed to convey that Bayesian modeling really does bring more to the table and it's not just the same as an additional term on your loss function. I often find the Bayesian answers intuitively pleasing; I'm not saying it's the appropriate tool for every problem, but it's certainly worth learning more about.
+I hope I've managed to convey that Bayesian modeling really does bring more to the table and it's not just the same as an additional term on your loss function. I often find the Bayesian answers intuitively appealing; I'm not saying it's the appropriate tool for every problem, but it's certainly worth learning more about.
 
 ---
 
