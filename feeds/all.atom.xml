@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Anthony Lu</title><link href="//luanths.github.io/" rel="alternate"></link><link href="//luanths.github.io/feeds/all.atom.xml" rel="self"></link><id>//luanths.github.io/</id><updated>2020-02-13T00:00:00-05:00</updated><entry><title>Installing OCaml at home</title><link href="//luanths.github.io/log/installing-ocaml-at-home/" rel="alternate"></link><published>2020-02-13T00:00:00-05:00</published><updated>2020-02-13T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-02-13:/log/installing-ocaml-at-home/</id><summary type="html">&lt;p&gt;I write OCaml code in my day job, where we’ve invested in a developer experience that works out of the box with the right tools, compilers, and editor plugins.&lt;/p&gt;
+&lt;p&gt;To use OCaml at home, there’s a bit more setup. I mostly followed the instructions in &lt;a href="https://dev.realworldocaml.org/install.html"&gt;Real World Ocaml&lt;/a&gt;, but there were a couple places where it seemed out of date and I ended up doing something different, so I’ve written up what I did here.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I write OCaml code in my day job, where we&amp;#8217;ve invested in a developer experience that works out of the box with the right tools, compilers, and editor&amp;nbsp;plugins.&lt;/p&gt;
+&lt;p&gt;To use OCaml at home, there&amp;#8217;s a bit more setup. I mostly followed the instructions in &lt;a href="https://dev.realworldocaml.org/install.html"&gt;Real World Ocaml&lt;/a&gt;, but there were a couple places where it seemed out of date and I ended up doing something different, so I&amp;#8217;ve written up what I did&amp;nbsp;here.&lt;/p&gt;
+
+
+&lt;p&gt;I started by installing &lt;a href="https://opam.ocaml.org/"&gt;opam&lt;/a&gt;. Since I run Arch Linux, I did this with &lt;code&gt;pacman -S opam&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I also enabled the &lt;a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/ocaml"&gt;Spacemacs layer for OCaml&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then, following the opam instructions, I initialized the package database and installed some basic libraries and&amp;nbsp;tools.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;opam init&lt;/span&gt;
+&lt;span class="err"&gt;eval $(opam env)&lt;/span&gt;
+&lt;span class="err"&gt;opam install core utop merlin ocp-indent dune&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;One gotcha: &lt;code&gt;utop&lt;/code&gt; depends on &lt;code&gt;lwt&lt;/code&gt;, which fails to compile unless the system library &lt;code&gt;libev&lt;/code&gt; is installed. So I had to &lt;code&gt;pacman -S libev&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;At this point I realized that, since I was used to running everything from Emacs, &lt;code&gt;eval $(opam env)&lt;/code&gt; wouldn&amp;#8217;t do what I wanted since it only activates the opam environment in my shell. After a bit of searching around, I arrived at this elisp function to activate opam in&amp;nbsp;Emacs.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;(defun opam-env ()&lt;/span&gt;
+&lt;span class="err"&gt;  (interactive nil)&lt;/span&gt;
+&lt;span class="err"&gt;  (add-to-list &amp;#39;exec-path (replace-regexp-in-string &amp;quot;\n\\&amp;#39;&amp;quot; &amp;quot;&amp;quot; (shell-command-to-string &amp;quot;opam config var bin&amp;quot;)))&lt;/span&gt;
+&lt;span class="err"&gt;    (dolist (var (car (read-from-string (shell-command-to-string &amp;quot;opam env --sexp&amp;quot;))))&lt;/span&gt;
+&lt;span class="err"&gt;      (setenv (car var) (cadr var))))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In retrospect, I suppose I could&amp;#8217;ve also run &lt;code&gt;eval $(opam env)&lt;/code&gt; in a shell and then launched Emacs, but this works for&amp;nbsp;me.&lt;/p&gt;
+&lt;p&gt;Anyway, at this point I&amp;#8217;m ready to start a coding project. Using &lt;a href="https://dune.build/"&gt;dune&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;dune init proj myproj --libs core&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This generates a little project structure, and I can open up &lt;code&gt;myproj/bin/main.ml&lt;/code&gt; and start coding. To build the project, I&amp;nbsp;run&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;dune build -w&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;which recompiles whenever I save, and now I&amp;#8217;m off to the&amp;nbsp;races.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>A Bayesian approach is not the prior</title><link href="//luanths.github.io/log/a-bayesian-approach-is-not-the-prior/" rel="alternate"></link><published>2020-02-04T00:00:00-05:00</published><updated>2020-02-04T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-02-04:/log/a-bayesian-approach-is-not-the-prior/</id><content type="html">&lt;p&gt;Andrew Gordon Wilson, &lt;a href="https://cims.nyu.edu/~andrewgw/caseforbdl/"&gt;The Case for Bayesian Deep Learning&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The key distinguishing property of a Bayesian approach is marginalization instead of optimization, not the prior, or Bayes rule&amp;nbsp;[&amp;#8230;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is a great point which &lt;a href="/articles/not-priors/"&gt;I agree with&lt;/a&gt;, and understanding this gave me greater respect for explicitly-Bayesian approaches, compared with those based on function optimization. Optimization can be very brittle, and Bayesian model averaging departs from it significantly in a way that is both theoretically appealing and may have practical&amp;nbsp;promise.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Continuous-time discrete-space MCMC</title><link href="//luanths.github.io/log/continuous-time-discrete-space-mcmc/" rel="alternate"></link><published>2020-01-27T00:00:00-05:00</published><updated>2020-01-27T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-01-27:/log/continuous-time-discrete-space-mcmc/</id><content type="html">&lt;p&gt;I came across this preprint which I found&amp;nbsp;fascinating:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sam Power, Jacob Vorstrup Goldman (2019) &lt;a href="https://arxiv.org/abs/1912.04681"&gt;Accelerated Sampling on Discrete Spaces with Non-Reversible Markov&amp;nbsp;Processes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The main new idea to me is that of &lt;span class="caps"&gt;MCMC&lt;/span&gt; sampling using a continuous-time Markov process, rather than a discrete-time Markov chain. &lt;a href="https://arxiv.org/abs/1701.02434"&gt;Hamiltonian Monte Carlo&lt;/a&gt; and other successful sampling algorithms already use continuous-time dynamics in continuous spaces, and this paper explores analogues of this for sampling discrete&amp;nbsp;spaces.&lt;/p&gt;
+&lt;p&gt;Working in continuous time makes the algorithm design clean in some ways: rather than rejecting state transitions to get the correct stationary distribution, one can choose how much time advances before the next transition. This effectively determines how much weight the current state gets in the final sample. I think this is similar to the difference between &lt;a href="https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/lectures/lecture17.pdf"&gt;rejection sampling and importance sampling&lt;/a&gt;. The authors also import useful ideas from continuous samplers, like adding momentum variables, to design more efficient&amp;nbsp;samplers.&lt;/p&gt;
+&lt;p&gt;The authors focus on spaces with a kind of algebraic structure, which plays the role of the vector structure of continuous space. I&amp;#8217;m curious where else these ideas can be&amp;nbsp;applied.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Putnam spheres</title><link href="//luanths.github.io/log/putnam-spheres/" rel="alternate"></link><published>2020-01-12T00:00:00-05:00</published><updated>2020-01-12T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-01-12:/log/putnam-spheres/</id><summary type="html">&lt;p&gt;&lt;a href="https://www.maa.org/math-competitions/putnam-competition"&gt;Putnam&lt;/a&gt; 2019 A4 asks if there exists a function f(x, y, z) from &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; to &lt;span class="math"&gt;\(\mathbf{R}\)&lt;/span&gt;, that integrates to zero over the surface of every unit sphere, but is not identically zero.&lt;/p&gt;
+&lt;p&gt;My coworkers were discussing this problem and its generalization: what about in &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt;?&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;a href="https://www.maa.org/math-competitions/putnam-competition"&gt;Putnam&lt;/a&gt; 2019 A4 asks if there exists a function f(x, y, z) from &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; to &lt;span class="math"&gt;\(\mathbf{R}\)&lt;/span&gt;, that integrates to zero over the surface of every unit sphere, but is not identically&amp;nbsp;zero.&lt;/p&gt;
+&lt;p&gt;My coworkers were discussing this problem and its generalization: what about in &lt;span class="math"&gt;\(\mathbf{R}^n\)&lt;/span&gt;?&lt;/p&gt;
+
+
+&lt;p&gt;We think that the answer is yes for all n, and that it&amp;#8217;s enough for f to be an axis-aligned plane wave, that is f(x, y, z, &amp;#8230;) = cos(kx) for some frequency&amp;nbsp;k.&lt;/p&gt;
+&lt;p&gt;Surprisingly (to my intuition), all we need to do is find k such that cos(kx) integrates to zero over the unit sphere &lt;em&gt;centered at zero&lt;/em&gt;. If it does, then it integrates to zero over &lt;em&gt;any&lt;/em&gt; unit&amp;nbsp;sphere.&lt;/p&gt;
+&lt;p&gt;This is essentially because you can get any shifted copy of cos(kx) using a &lt;a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine"&gt;linear combination&lt;/a&gt; of cos(kx) and sin(kx), and we know that sin(kx) integrates to zero over the unit sphere centered at zero because sin is an &lt;a href="https://en.wikipedia.org/wiki/Even_and_odd_functions"&gt;even function&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So does k always exist? It seems like it should, because things are continuous as a function of k. For the particular case of n = 3, k comes out particularly clean because of a &lt;a href="https://www.scottaaronson.com/blog/?p=4432"&gt;coincidence in 3 dimensions&lt;/a&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="log"></category></entry><entry><title>Eigenvectors from eigenvalues</title><link href="//luanths.github.io/log/eigenvectors-from-eigenvalues/" rel="alternate"></link><published>2020-01-06T00:00:00-05:00</published><updated>2020-01-06T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-01-06:/log/eigenvectors-from-eigenvalues/</id><content type="html">&lt;p&gt;&lt;span class="dquo"&gt;&amp;#8220;&lt;/span&gt;Eigenvectors from eigenvalues&amp;#8221; (&lt;a href="https://www.quantamagazine.org/neutrinos-lead-to-unexpected-discovery-in-basic-math-20191113/"&gt;Quanta article&lt;/a&gt;, &lt;a href="https://terrytao.wordpress.com/2019/08/13/eigenvectors-from-eigenvalues/"&gt;Terry Tao blog post&lt;/a&gt;) is a recent result showing an unexpected relationship in basic linear&amp;nbsp;algebra.&lt;/p&gt;
+&lt;p&gt;I was trying to develop some intuition for this result and I initially found the proofs hard to read and understand, but after some studying I think I get it. I&amp;#8217;ve written a quick explanation below; I think this would be much improved with pictures, but I don&amp;#8217;t want to figure that out right now. Maybe another&amp;nbsp;time.&lt;/p&gt;
+&lt;p&gt;Suppose &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a covariance matrix. Let &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt; be the largest eigenvalue of &lt;span class="math"&gt;\(A\)&lt;/span&gt;, with eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt;. We know &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt; and we&amp;#8217;d like to learn about &lt;span class="math"&gt;\(v\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Consider &lt;span class="math"&gt;\(\lambda I - A\)&lt;/span&gt; as a covariance matrix. Its variance in each direction is &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt; minus the variance that &lt;span class="math"&gt;\(A\)&lt;/span&gt; has in that direction. In particular, it has zero variance in the &lt;span class="math"&gt;\(v\)&lt;/span&gt; direction. If you imagine samples from a Gaussian distribution with covariance &lt;span class="math"&gt;\(\lambda I - A\)&lt;/span&gt;, it&amp;#8217;ll be a point cloud shaped like a flat ellipse that is perpendicular to &lt;span class="math"&gt;\(v\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Now if we look at this flat ellipse from the &lt;span class="math"&gt;\(j\)&lt;/span&gt;-th coordinate direction, how big is its &amp;#8220;silhouette&amp;#8221;? That is, what is the area of the projection of the ellipse onto the &lt;span class="math"&gt;\(j\)&lt;/span&gt;-th coordinate&amp;nbsp;plane?&lt;/p&gt;
+&lt;p&gt;If the &lt;span class="math"&gt;\(j\)&lt;/span&gt;-th axis is parallel to &lt;span class="math"&gt;\(v\)&lt;/span&gt;, then it&amp;#8217;s like looking at a pancake head-on: the area of the projection is the area of the whole ellipse. But if the &lt;span class="math"&gt;\(j\)&lt;/span&gt;-th axis is perpendicular to &lt;span class="math"&gt;\(v\)&lt;/span&gt;, then it&amp;#8217;s like looking at a pancake sideways: the area of the projection is&amp;nbsp;zero.&lt;/p&gt;
+&lt;p&gt;In general we have a linear combination of these two cases, so we can figure out the component of &lt;span class="math"&gt;\(v\)&lt;/span&gt; that is along the &lt;span class="math"&gt;\(j\)&lt;/span&gt;-th axis by taking the ratio of the projection&amp;#8217;s area to the ellipse&amp;#8217;s area. And that&amp;#8217;s effectively what the eigenvectors-from-eigenvalues formula&amp;nbsp;does.&lt;/p&gt;
+&lt;p&gt;(This geometric interpretation only works with the largest eigenvalue, because variances and areas have to be positive, but the math works out&amp;nbsp;regardless.)&lt;/p&gt;
+&lt;p&gt;What&amp;#8217;s notable to me is how helpful it was to my intuition to think of &lt;span class="math"&gt;\(A\)&lt;/span&gt; as a covariance matrix, rather than as a linear transformation, which is the more usual role of matrices in linear algebra. I think this applies to many uses of matrix math I see. More on this later,&amp;nbsp;maybe?&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="log"></category></entry><entry><title>Reviving this log</title><link href="//luanths.github.io/log/reviving-this-log/" rel="alternate"></link><published>2020-01-05T00:00:00-05:00</published><updated>2020-01-05T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2020-01-05:/log/reviving-this-log/</id><content type="html">&lt;p&gt;Let&amp;#8217;s try this again. This entry brought to you by newly-set-up &lt;a href="https://soundlake.net/posts/2018/04/02/the-exhaustive-guide-to-build-pelican-blog-with-github-and-travis-ci.html"&gt;Travis-&lt;span class="caps"&gt;CI&lt;/span&gt; automation&lt;/a&gt;!&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Named tensor, labeled array</title><link href="//luanths.github.io/log/named-tensor-labeled-array/" rel="alternate"></link><published>2019-01-14T00:00:00-05:00</published><updated>2019-01-14T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2019-01-14:/log/named-tensor-labeled-array/</id><content type="html">&lt;p&gt;&lt;a href="http://nlp.seas.harvard.edu/NamedTensor"&gt;NamedTensor&lt;/a&gt; is a proposal from
+Harvard &lt;span class="caps"&gt;NLP&lt;/span&gt; researchers for enhancing tensors &amp;#8212; multi-dimensional arrays which
+are the central object in many deep learning frameworks &amp;#8212; with named
+dimensions. For anyone who&amp;#8217;s written code to work with multi-dimensional arrays
+and had to deal with knowing which axis is which and making sure they line up, I
+think this sort of thing can help a lot with maintainability and&amp;nbsp;usability.&lt;/p&gt;
+&lt;p&gt;In fact many commenters on the NamedTensor post pointed out the similarity to
+&lt;a href="http://xarray.pydata.org/en/stable/"&gt;xarray&lt;/a&gt;, which is an existing library that
+brings labeled dimensions to numpy. I&amp;#8217;ve been using xarray recently for some
+work projects and I&amp;#8217;ve found that it lets me write research code that feels a
+lot cleaner and more robust compared to the axis twiddling I would&amp;#8217;ve done in
+raw&amp;nbsp;numpy.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Pyro and Edward2 comparison by example</title><link href="//luanths.github.io/log/pyro-and-edward2-comparison-by-example/" rel="alternate"></link><published>2018-12-16T00:00:00-05:00</published><updated>2018-12-16T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-12-16:/log/pyro-and-edward2-comparison-by-example/</id><content type="html">&lt;p&gt;To get a flavor of the probabilistic programming frameworks Pyro and Edward2, I
+decided to implement some examples in each of&amp;nbsp;them.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve started with a small example cribbed from the Pyro docs. Notebooks:
+&lt;a href="https://github.com/luanthe/notebooks/blob/master/2018-12-16%20pyro.ipynb"&gt;Pyro&lt;/a&gt; &lt;a href="https://github.com/luanthe/notebooks/blob/master/2018-12-16%20edward.ipynb"&gt;Edward2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;My first&amp;nbsp;impressions:&lt;/p&gt;
+&lt;p&gt;Pyro has a much more organized set of tutorials and examples that explain each
+of its features. Edward2 &amp;#8212; and Tensorflow Probability in general of which it is
+a part &amp;#8212; lacks anything comparable. There is a set of lengthier standalone
+examples showcasing various things you can do, but it&amp;#8217;s hard to get a complete
+picture from them. Hopefully this will get better with&amp;nbsp;time.&lt;/p&gt;
+&lt;p&gt;Also, while Pyro does &lt;span class="caps"&gt;SVI&lt;/span&gt; out of the box, Edward2 doesn&amp;#8217;t seem to have a built
+in variational inference op at all; you have to spell out the &lt;span class="caps"&gt;ELBO&lt;/span&gt; objective.
+This would make sense if Edward2 is in some sense complementary to existing
+frameworks, especially Edward 1. You could do vanilla &lt;span class="caps"&gt;VI&lt;/span&gt; in Edward, so Edward2
+is for everything&amp;nbsp;else.&lt;/p&gt;
+&lt;p&gt;Next I&amp;#8217;d like to take one of the standalone examples in Edward2 and rewrite it
+in&amp;nbsp;Pyro.&lt;/p&gt;
+&lt;p&gt;Update: I obviously never got back to this, but &lt;a href="https://colcarroll.github.io/ppl-api/"&gt;someone else did something
+similar&lt;/a&gt; with many frameworks. It&amp;#8217;s more aimed toward the common use
+patterns of each &lt;span class="caps"&gt;API&lt;/span&gt;, whereas I would&amp;#8217;ve liked to do examples digging into some
+lower level details, but that&amp;#8217;s a task for another&amp;nbsp;day.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Thinking about probabilistic programming again</title><link href="//luanths.github.io/log/thinking-about-probabilistic-programming-again/" rel="alternate"></link><published>2018-12-15T00:00:00-05:00</published><updated>2018-12-15T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-12-15:/log/thinking-about-probabilistic-programming-again/</id><content type="html">&lt;p&gt;Between having just come back from NeurIPS and met some of my old labmates, and
+watching the &lt;a href="https://www.youtube.com/playlist?list=PL_PW0E_Tf2qvXBEpl10Y39RULTN-ExzZQ"&gt;talks from &lt;span class="caps"&gt;PROBPROG&lt;/span&gt; 2018&lt;/a&gt;, I&amp;#8217;ve gotten into a
+probabilistic programming&amp;nbsp;mood.&lt;/p&gt;
+&lt;p&gt;In particular I&amp;#8217;ve been thinking about the design of probabilistic programming
+frameworks, from the now trendy deep-learning-focused ones such as &lt;a href="http://pyro.ai/"&gt;Pyro&lt;/a&gt;
+and &lt;a href="https://github.com/tensorflow/probability/tree/master/tensorflow_probability/python/edward2"&gt;Edward2&lt;/a&gt;, to a new project from my former lab, &lt;a href="https://github.com/probcomp/Gen"&gt;Gen&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Of course, my &lt;a href="https://dspace.mit.edu/handle/1721.1/113160"&gt;M.Eng thesis&lt;/a&gt; was on this topic. But looking back on it
+now, the proposal in my thesis seems &lt;em&gt;way too complicated&lt;/em&gt;. (I think it&amp;#8217;s
+partly to blame that I was anchored to the existing implementations of Venture
+in the lab, which had a lot of complicated cruft in&amp;nbsp;them.)&lt;/p&gt;
+&lt;p&gt;I want to revisit this and maybe eventually produce something that I can explain
+to other people, but for now here are some scattered thoughts
+(incomprehensibility&amp;nbsp;warning):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;In my thesis there was this whole section on traces with a monolithic
+  interface that they should satisfy. I like Gen&amp;#8217;s approach better, where a
+  trace is basically a plain data structure whose interpretation depends on the
+  model&amp;nbsp;program.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In fact, I would go further. Probabilistically, there&amp;#8217;s nothing special about
+  tracing; it&amp;#8217;s just a program transformation that turns a probabilistic program
+  into a trace-valued random variable. This should simplify concepts a&amp;nbsp;lot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I had this idea that stochastic procedures could have their own internal
+  mutable state, to keep track of something like sufficient statistics. In
+  hindsight it seems better for procedures to be stateless but allowed to mutate
+  their inputs. You can still have a stateful procedure by making a closure.
+  Note: mutation only works if a procedure knows how to run itself backward to
+  undo what it&amp;nbsp;did.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Another source of complexity was for handling probabilistic programs that
+  don&amp;#8217;t have a joint density, such as programs that call out to an external
+  simulator. My current opinion is that this doesn&amp;#8217;t seem worth cluttering up
+  the core interface for. You could work around this by, for example, tracing
+  the external program&amp;#8217;s use of the random number generator and making a joint
+  density out of that. (This is basically the approach in &lt;a href="https://arxiv.org/pdf/1807.07706.pdf"&gt;Frank Wood&amp;#8217;s work
+  with the physics simulator &lt;span class="caps"&gt;SHERPA&lt;/span&gt;&lt;/a&gt;.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If the trace is just a data structure like in Gen, all the incremental graph
+  stuff in Venture just becomes a data diffing problem. That&amp;#8217;s&amp;nbsp;neat.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="log"></category></entry><entry><title>NeurIPS 2018 stuff</title><link href="//luanths.github.io/articles/neurips-2018/" rel="alternate"></link><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-12-04:/articles/neurips-2018/</id><content type="html">&lt;h2&gt;Pre-notes&lt;/h2&gt;
+&lt;p&gt;Looking through the schedule, here are some things that I thought looked
+interesting. It&amp;#8217;s definitely not a comprehensive list, nor related to what a
+typical &lt;span class="caps"&gt;ML&lt;/span&gt; researcher might consider notable, also I don&amp;#8217;t really know what I&amp;#8217;m
+talking about so take my editorial descriptions with a grain of&amp;nbsp;salt.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11968"&gt;Glow: Generative Flow with Invertible 1x1 Convolutions&lt;/a&gt; (Tue 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A generative model, comparable to VAEs and GANs. Gains some computational advantages by using invertible layers. &lt;a href="https://blog.openai.com/glow/"&gt;OpenAI blog&amp;nbsp;post&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12596"&gt;Neural ODEs&lt;/a&gt; (Tue 15:50 Track&amp;nbsp;2)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Replace a discrete stack of layers with continuous dynamics. David Duvenaud and&amp;nbsp;students&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11960"&gt;Bayesian Nonparametric Spectral Estimation&lt;/a&gt; (Tue 16:55 Track&amp;nbsp;1)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fourier analysis through the lens of Gaussian&amp;nbsp;processes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12639"&gt;Sequential Attend, Infer, Repeat&lt;/a&gt; (Wed 10:25 Track&amp;nbsp;2)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generative model for scene understanding, based on&amp;nbsp;VAEs?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11441"&gt;Importance Weighting and Variational Inference&lt;/a&gt; (Wed 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On some recent importance-weighted &lt;span class="caps"&gt;VAE&lt;/span&gt; work and repurposing it for probabilistic inference&amp;nbsp;only.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11975"&gt;&lt;span class="caps"&gt;PCA&lt;/span&gt; of high dimensional random walks&lt;/a&gt; (Wed 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="caps"&gt;PCA&lt;/span&gt; has been proposed as a way to visualize deep net training trajectories. What if you apply it to a random&amp;nbsp;walk?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/7987-simple-distributed-and-accelerated-probabilistic-programming"&gt;Simple, Distributed, and Accelerated Probabilistic Programming&lt;/a&gt; (Wed 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On Edward2, a new probabilistic programming package that works with Tensorflow. My former colleague Alexey Radul&amp;#8217;s name is on it. Google&amp;nbsp;(Brain)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12013"&gt;Autoconj: Recognizing and Exploiting Conjugacy Without a &lt;span class="caps"&gt;DSL&lt;/span&gt;&lt;/a&gt; (Thu 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automatically optimize parts of a probabilistic program embedded in Python. Also from Google &lt;span class="caps"&gt;AI&lt;/span&gt;/Brain&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11606"&gt;Tangent: Automatic differentation using source-code transformation for dynamically typed array programming&lt;/a&gt; (Wed 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/8221-backpropagation-with-callbacks-foundations-for-efficient-and-expressive-differentiable-programming"&gt;Backpropagation with Callbacks&lt;/a&gt; (Wed 17:00&amp;nbsp;poster)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11836"&gt;Automatic Differentiation in &lt;span class="caps"&gt;ML&lt;/span&gt;: Where we are and where we should be going&lt;/a&gt; (Thu 10:40 Track&amp;nbsp;1)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A bunch of work on automatic differentiation. One of them does source code transformation on&amp;nbsp;Python!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12706"&gt;Human-in-the-Loop Interpretability Prior&lt;/a&gt; (Thu 10:25 Track&amp;nbsp;1)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What makes an model interpretable? Ask &lt;span class="caps"&gt;ML&lt;/span&gt;&amp;nbsp;researchers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/7862-slang-fast-structured-covariance-approximations-for-bayesian-deep-learning-with-natural-gradient"&gt;&lt;span class="caps"&gt;SLANG&lt;/span&gt;: Fast Structured Covariance Approximation for Bayesian Deep Learning with Natural Gradient&lt;/a&gt; (Thu 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/7949-bruno-a-deep-recurrent-model-for-exchangeable-data"&gt;&lt;span class="caps"&gt;BRUNO&lt;/span&gt;: A Deep Recurrent Model for Exchangeable Data&lt;/a&gt; (Thu 10:45&amp;nbsp;poster)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bayesian deep learning&amp;nbsp;models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/7780-hyperbolic-neural-networks.pdf"&gt;Hyperbolic Neural Networks&lt;/a&gt; (Thu 15:30 Track&amp;nbsp;2)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A theory for neural networks that work in hyperbolic geometry, which is &amp;#8220;bigger&amp;#8221; than Euclidean space even in many&amp;nbsp;dimensions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12742"&gt;Sample-Efficient Reinforcement Learning with Stochastic Ensemble Value Expansion&lt;/a&gt; (Thu 15:50 Track&amp;nbsp;1)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A model-based &lt;span class="caps"&gt;RL&lt;/span&gt; approach that can learn from much fewer samples, but also performs well asymptotically by falling back to model-free &lt;span class="caps"&gt;RL&lt;/span&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://papers.nips.cc/paper/7725-deep-reinforcement-learning-in-a-handful-of-trials-using-probabilistic-dynamics-models"&gt;Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models&lt;/a&gt; (Thu 16:20 Track&amp;nbsp;1)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Another model-based &lt;span class="caps"&gt;RL&lt;/span&gt; approach. From Sergey Levine and students at &lt;span class="caps"&gt;UC&lt;/span&gt; Berkeley &lt;span class="caps"&gt;AI&lt;/span&gt;&amp;nbsp;Lab.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Tutorials&lt;/h2&gt;
+&lt;p&gt;David Dunson gave a &lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=10984"&gt;tutorial on Scalable Bayesian Inference&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;He focused on &lt;span class="caps"&gt;MCMC&lt;/span&gt;, because in his opinion variational methods do a bad job of
+quantifying uncertainty and you have no idea how accurate the approximation is.
+This seems a bit unfair to me, because when I&amp;#8217;ve used &lt;span class="caps"&gt;MCMC&lt;/span&gt; I also had no idea
+how accurate the approximation was. He did have some slides that gestured at
+theory behind his methods, so maybe there&amp;#8217;s something there? What do I&amp;nbsp;know.&lt;/p&gt;
+&lt;p&gt;Anyway, I agree with the sentiment that if you go to the trouble of doing
+Bayesian inference to get an uncertainty estimate, you should do a good job of
+it. But he spent most of the time discussing a handful of methods from his
+group, skipped over some of them to save time, and the ones he did present felt
+like hacks since he breezed over the theory. Overall, I left the talk feeling&amp;nbsp;disappointed.&lt;/p&gt;
+&lt;p&gt;Susan Athey presented on &lt;a href="https://nips.cc/Conferences/2018/Schedule?showEvent=10982"&gt;Counterfactual Inference&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To be honest, I didn&amp;#8217;t pay that much attention during this tutorial and it
+wasn&amp;#8217;t her fault. In broad strokes I would agree that a lot of important
+problems are counterfactual inference problems. But outside of textbook
+examples, I feel like I don&amp;#8217;t have any problems that I know how to formulate
+as conterfactual inference&amp;nbsp;problems.&lt;/p&gt;
+&lt;p&gt;It&amp;#8217;s a topic I definitely want to look into more&amp;nbsp;later.&lt;/p&gt;
+&lt;h2&gt;Tuesday&amp;nbsp;sessions&lt;/h2&gt;
+&lt;p&gt;I didn&amp;#8217;t know beforehand that most of the talks at NeurIPS were 5-minute poster
+spotlights. In the first session I planned to hop tracks to catch some specific
+talks; I quickly realized that this was useless, since 5-minute talks have no
+content. Browsing the posters themselves was comparatively way more&amp;nbsp;useful.&lt;/p&gt;
+&lt;p&gt;I met Durk Kingma, who was presenting the Glow poster. I learned the&amp;nbsp;following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Their work is based on a previous invertible architecture called Real &lt;span class="caps"&gt;NVP&lt;/span&gt;. The
+  architecture is nearly the same but they&amp;#8217;ve made some small&amp;nbsp;refinements.&lt;/li&gt;
+&lt;li&gt;It sounds like most of the performance gain relative to the previous paper
+  comes from training a bigger and better model using more&amp;nbsp;computers.&lt;/li&gt;
+&lt;li&gt;I asked why this model generates good-quality images, compared to VAEs which
+  (I thought) generate blurry images. Kingma said he thinks a &lt;span class="caps"&gt;VAE&lt;/span&gt; could generate
+  similarly good images if a similar amount of work was put into&amp;nbsp;it.&lt;/li&gt;
+&lt;li&gt;However, VAEs still achieve better&amp;nbsp;likelihood.&lt;/li&gt;
+&lt;li&gt;More reading on invertible model architectures: &lt;a href="https://hci.iwr.uni-heidelberg.de/vislearn/inverse-problems-invertible-neural-networks/"&gt;Analyzing Inverse Problems
+with Invertible Neural&amp;nbsp;Networks&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I missed the talk on Neural ODEs, unfortunately. I&amp;#8217;ve heard it was a high
+quality paper, so I&amp;#8217;ll check it&amp;nbsp;out.&lt;/p&gt;
+&lt;h2&gt;Wednesday&amp;nbsp;sessions&lt;/h2&gt;
+&lt;p&gt;Joelle Pineau gave an invited talk on reproducibility in reinforcement learning.
+Two main&amp;nbsp;takeaways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reinforcment learning algorithms can perform differently due to different
+  implementations, different hyperparameters, even different random seeds. We
+  need to do more careful about fair comparisons to reach robust&amp;nbsp;conclusions.&lt;/li&gt;
+&lt;li&gt;Standard benchmark environments are easy to memorize. We need more diverse,
+  realistic environments that test generalizability of&amp;nbsp;results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At posters, I had some good discussion with one of the authors of the &lt;span class="caps"&gt;IWVI&lt;/span&gt;
+paper. I was a little concerned that it optimizes an upper bound on the &lt;span class="caps"&gt;KL&lt;/span&gt;
+divergence, so it might waste effort minimizing the looseness of the bound
+instead of the thing you care about. But the empirical results do look pretty&amp;nbsp;good.&lt;/p&gt;
+&lt;p&gt;I checked out the Edward2 poster. It sounds like the most exciting things about
+it are that it supports stuff like distributing a large model across multiple
+TPUs, and it&amp;#8217;s lower-level than alternatives like Pyro and therefore flexible
+enough to support research into experimental model architectures. Having now
+read the Edward2 paper and compared it to the &lt;a href="http://pyro.ai/examples/effect_handlers.html"&gt;documentation of Pyro&amp;#8217;s internal
+APIs&lt;/a&gt;, my impression is that these two actually seem extremely similar.
+I&amp;#8217;d like to try them both and compare sometime, when I get back into
+probabilistic&amp;nbsp;programming.&lt;/p&gt;
+&lt;p&gt;I visited the Tangent poster and found out about a more recent Google
+project in the same space, &lt;a href="https://github.com/google/jax"&gt;jax&lt;/a&gt;. It uses program tracing for autodiff
+combined with &lt;span class="caps"&gt;JIT&lt;/span&gt;-compiling code to GPUs and TPUs for high&amp;nbsp;performance.&lt;/p&gt;
+&lt;p&gt;I didn&amp;#8217;t actually see the poster on &amp;#8220;Backpropagation with Callbacks&amp;#8221;, but my
+coworker pointed it out later. It&amp;#8217;s a way to implement automatic differentation
+very simply and cleanly using functional programming. Might be worth studying,
+although I&amp;#8217;m not so interested in building an &lt;span class="caps"&gt;AD&lt;/span&gt; system from scratch that
+doesn&amp;#8217;t come with a big library of array functions and &lt;span class="caps"&gt;GPU&lt;/span&gt; support and&amp;nbsp;stuff.&lt;/p&gt;
+&lt;h2&gt;Thursday&amp;nbsp;sessions&lt;/h2&gt;
+&lt;p&gt;A few cool talks and posters&amp;nbsp;today. &lt;/p&gt;
+&lt;p&gt;In the morning I engaged with the &lt;span class="caps"&gt;SLANG&lt;/span&gt; poster. They use a low rank + diagonal
+approximation to a covariance matrix (in this case, the covariance of a
+variational posterior over model parameters). The low rank part is computed with
+an eigendecomposition on each iteration and then the diagonal is corrected. I&amp;#8217;ve
+thought about how to compute a low rank approximation of a covariance matrix
+before, but I hadn&amp;#8217;t thought about the fact that it&amp;#8217;s also computationally easy
+to maintain the exact diagonal as a correction to the&amp;nbsp;approximation.&lt;/p&gt;
+&lt;p&gt;In fact there&amp;#8217;s another natural gradient descent paper that uses this idea that
+maintaining a diagonal correction is cheap: &lt;a href="http://papers.nips.cc/paper/8164-fast-approximate-natural-gradient-descent-in-a-kronecker-factored-eigenbasis"&gt;Fast Approximate Natural Gradient
+in a Kronecker-Factored&amp;nbsp;Eigenbasis&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In the afternoon I saw the two talks about model-based reinforcement learning
+approaches, &lt;span class="caps"&gt;STEVE&lt;/span&gt; and &lt;span class="caps"&gt;PETS&lt;/span&gt;. Listening to the talks, they seemed extremely
+similar to me: both emphasized quantifying uncertainty in the dynamics models,
+and both emphasized how they could learn using few samples compared to
+model-free methods. I probably could tell the difference if I were in the field
+and could unpack what the jargon in the names meant, but instead I visited the
+posters and found&amp;nbsp;out:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class="caps"&gt;STEVE&lt;/span&gt; is based on Q learning. The model is used to roll out several time steps
+  to obtain a more accurate estimate of the action-value function. It uses the
+  uncertainty in the model to decide how far to roll out. If the model is too
+  uncertain, it will fall back to one step which is the same as Q&amp;nbsp;learning.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class="caps"&gt;PETS&lt;/span&gt; uses the dynamics model directly to plan its next sequence of actions by
+  sampling trajectories. The model is the only thing that is learned, no policy
+  or value function; however it does more work at inference&amp;nbsp;time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Workshops&lt;/h2&gt;
+&lt;p&gt;Frank Wood spoke about probabilistic programming. He&amp;#8217;s interested in
+probabilistic models as &lt;em&gt;programs&lt;/em&gt; with interesting dependency structure, and
+&lt;a href="http://papers.nips.cc/paper/7570-faithful-inversion-of-generative-models-for-effective-amortized-inference"&gt;inference algorithms that take advantage of that structure&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One thing I found interesting is that he gave a plug for the &lt;a href="https://arxiv.org/abs/1805.10469"&gt;wake sleep
+algorithm&lt;/a&gt; for learning an inference model, to be contrasted with the
+variational Bayes methods that have been more popular recently. I haven&amp;#8217;t really
+seen this before, but it reminded me of a &lt;a href="https://papers.nips.cc/paper/6353-neurally-guided-procedural-models-amortized-inference-for-procedural-graphics-programs-using-neural-networks.pdf"&gt;paper on neurally-guided procedural
+generation&lt;/a&gt; I saw Noah Goodman talk about where they used perhaps a
+similar&amp;nbsp;technique.&lt;/p&gt;
+&lt;p&gt;There was another talk on model-based reinforcement learning using Bayesian
+neural networks. One issue is that if you use the learned model as an input to a
+planning algorithm that uses gradients, the planner will find adversarial
+examples in the model.&amp;nbsp;Oops!&lt;/p&gt;
+&lt;p&gt;One of my big takeaways from the Bayesian deep learning workshop is that
+Bayesian models and other existing methods of uncertainty quantification seem to
+do a bad job of predicting &amp;#8220;out-of-distribution&amp;#8221; inputs. They&amp;#8217;ll assign high
+uncertainty in areas near decision boundaries, but they won&amp;#8217;t necessarily assign
+high uncertainty for random inputs that are way outside the training&amp;nbsp;distribution.&lt;/p&gt;
+&lt;p&gt;A particular manifestation of this: &lt;a href="http://bayesiandeeplearning.org/2018/papers/67.pdf"&gt;Do Deep Generative Models Know What They
+Don&amp;#8217;t Know?&lt;/a&gt; This paper finds that a generative flow-based model trained on
+the &lt;span class="caps"&gt;CIFAR&lt;/span&gt;-10 dataset assigns higher probability to examples from the &lt;span class="caps"&gt;SVHN&lt;/span&gt;
+dataset than the ones from the training set. It seems these models are not
+exactly doing what we think or would like that they&amp;nbsp;are.&lt;/p&gt;
+&lt;h2&gt;Misc&lt;/h2&gt;
+&lt;p&gt;In the above I&amp;#8217;ve focused on content, rather than on my experience of attending
+the&amp;nbsp;conference.&lt;/p&gt;
+&lt;p&gt;I think that at some point I developed an overly rosy expectation of how
+intellectually valuable it would be to attend a large academic conference like
+NeurIPS. Attending talks was less enlightening than I imagined; meeting specific
+scientists whose names I&amp;#8217;d heard of was less exciting than I imagined. And I
+don&amp;#8217;t know that it would be worth attending for the full week if I were to do it&amp;nbsp;again.&lt;/p&gt;
+&lt;p&gt;But adjusting for those expectations, I&amp;#8217;m definitely glad I&amp;nbsp;went.&lt;/p&gt;
+&lt;p&gt;My favorite part of the program was the poster sessions. I liked to hear people
+talk about their work in a less scripted way, where they had more time to go
+over details and maybe the background ideas and concepts that they build upon,
+and it felt easier to ask questions and have some semblance of a&amp;nbsp;conversation.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;m not going to talk here about my conversations with people at our recruiting
+booth or events, or with my former classmates and labmates and others I
+recognized or met for the first time &amp;#8212; but those also felt&amp;nbsp;valuable.&lt;/p&gt;
+&lt;p&gt;Most of all it was an excuse to immerse myself in machine learning and &lt;span class="caps"&gt;AI&lt;/span&gt; and
+think about nothing else for a week. I definitely appreciated it for that alone.
+My head is spinning with ideas now and I hope I get around to following up on
+some of&amp;nbsp;them.&lt;/p&gt;</content><category term="articles"></category></entry><entry><title>N(eur)IPS</title><link href="//luanths.github.io/log/neurips/" rel="alternate"></link><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-12-03:/log/neurips/</id><content type="html">&lt;p&gt;I&amp;#8217;m at NeurIPS this week! It&amp;#8217;s my first time going to an academic conference,
+and I&amp;#8217;m excited. Although I&amp;#8217;m mostly there to represent my employer, I&amp;#8217;m also
+interested to meet people and learn about current&amp;nbsp;research.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve started a &lt;a href="/articles/neurips-2018/"&gt;page&lt;/a&gt; where I might put some of my notes and&amp;nbsp;thoughts.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Trying out Observable</title><link href="//luanths.github.io/log/trying-out-observable/" rel="alternate"></link><published>2018-11-25T00:00:00-05:00</published><updated>2018-11-25T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-11-25:/log/trying-out-observable/</id><content type="html">&lt;p&gt;&lt;a href="https://beta.observablehq.com/"&gt;Observable&lt;/a&gt; is a web app for making interactive notebooks. I&amp;#8217;ve
+been interested in the idea since I heard of it, and recently I decided to try
+it out by porting &lt;a href="https://github.com/luanthe/notebooks/blob/master/2018-06-28%20continued%20rational%20function%20approximations.ipynb"&gt;one of my Jupyter notebook posts&lt;/a&gt; to&amp;nbsp;Observable.&lt;/p&gt;
+&lt;p&gt;First order of business was figuring out how to make a simple line plot. I&amp;#8217;m not
+aware of a Javascript analogue of Python &lt;code&gt;matplotlib&lt;/code&gt; that is widely used. I
+know there&amp;#8217;s &lt;a href="https://d3js.org/"&gt;D3&lt;/a&gt;, but my impression is that D3 is more designed for
+building custom fancy interactive visualizations, and it seemed too big and
+complicated when basically all I want to do is &lt;code&gt;plot(x, y)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Through looking at some Observable example notebooks I came across
+&lt;a href="https://vega.github.io/vega-lite/"&gt;Vega-Lite&lt;/a&gt;, which seemed a bit simpler to use. It&amp;#8217;s still fancier
+than &lt;code&gt;matplotlib&lt;/code&gt;; my Python code for the first&amp;nbsp;plot&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log1p&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axhline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;black&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axvline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;black&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;became a 15+ line &lt;span class="caps"&gt;JSON&lt;/span&gt; description of how to render the&amp;nbsp;plot.&lt;/p&gt;
+&lt;p&gt;I mean, okay, this is fine. Vega-Lite is (I think?) designed for web documents
+that are rendered over and over again, so it makes sense that it makes you
+specify plots using a more explicit, declarative style. And at least I can put
+most of the plot options into a function that I can reuse throughout a&amp;nbsp;notebook.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Emacs on a Chromebook</title><link href="//luanths.github.io/log/emacs-on-a-chromebook/" rel="alternate"></link><published>2018-11-20T00:00:00-05:00</published><updated>2018-11-20T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-11-20:/log/emacs-on-a-chromebook/</id><content type="html">&lt;p&gt;This week I&amp;#8217;m away from home and my main computer is a&amp;nbsp;Chromebook.&lt;/p&gt;
+&lt;p&gt;I think Chromebooks are great and cover most of what I&amp;#8217;d want from a computer on
+the go, but sometimes Chrome &lt;span class="caps"&gt;OS&lt;/span&gt; is not enough: for instance, this week I wanted
+a Linux environment with Emacs/Python/Git so I could update &lt;a href="https://github.com/luanthe/luanthe.github.io"&gt;this
+website&lt;/a&gt; among other&amp;nbsp;things.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve heard of &lt;a href="https://github.com/dnschneid/crouton"&gt;crouton&lt;/a&gt; as a way to install Linux on a Chromebook. In
+my case, I didn&amp;#8217;t want to replace Chrome &lt;span class="caps"&gt;OS&lt;/span&gt; entirely. Instead, I set it up so
+that I have Emacs running in a window within Chrome &lt;span class="caps"&gt;OS&lt;/span&gt;. crouton can do this&amp;nbsp;too!&lt;/p&gt;
+&lt;p&gt;The setup was pretty easy to figure out from the examples in the crouton readme,
+but here&amp;#8217;s exactly what I&amp;nbsp;did:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Enable developer&amp;nbsp;mode&lt;/li&gt;
+&lt;li&gt;Download &lt;code&gt;crouton&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open a shell (Ctrl+Alt+T, &lt;code&gt;shell&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;sudo sh ~/Downloads/crouton -t xiwi&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo enter-chroot&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo apt-get install emacs git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;(Optional) Set up Emacs configuration. I use &lt;a href="https://github.com/syl20bnr/spacemacs"&gt;Spacemacs&lt;/a&gt;, so I
+   installed it with &lt;code&gt;git clone https://github.com/syl20bnr/spacemacs
+   ~/.emacs.d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;exit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open an emacs window by running &lt;code&gt;sudo startxiwi emacs&lt;/code&gt; in the&amp;nbsp;shell&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At work I&amp;#8217;ve been moving toward &lt;a href="https://ambrevar.xyz/emacs-eshell/"&gt;using Emacs everywhere&lt;/a&gt;, so having
+Emacs be my main interface to the Linux side works pretty well for&amp;nbsp;me.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Trying a new thing</title><link href="//luanths.github.io/log/trying-a-new-thing/" rel="alternate"></link><published>2018-11-18T00:00:00-05:00</published><updated>2018-11-18T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-11-18:/log/trying-a-new-thing/</id><content type="html">&lt;p&gt;What this log is and&amp;nbsp;isn&amp;#8217;t:&lt;/p&gt;
+&lt;p&gt;It&amp;#8217;s mostly for me, rather than for any particular audience. In fact, I expect zero people to follow&amp;nbsp;it.&lt;/p&gt;
+&lt;p&gt;It might be useful as a record of the kinds of stuff I think&amp;nbsp;about.&lt;/p&gt;
+&lt;p&gt;I want to stay away from long-form writing or any standard of quality or polish. I can never keep that up. Entries should be written in one sitting, no&amp;nbsp;drafts.&lt;/p&gt;
+&lt;p&gt;I guess it&amp;#8217;s like a linkblog/microblog. But not focused on current events or my personal&amp;nbsp;life.&lt;/p&gt;</content><category term="log"></category></entry><entry><title>Three Ways to Look at a Matrix</title><link href="//luanths.github.io/articles/matrix-three-ways/" rel="alternate"></link><published>2018-04-08T00:00:00-04:00</published><updated>2018-04-08T00:00:00-04:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-04-08:/articles/matrix-three-ways/</id><content type="html">&lt;p&gt;A matrix can be used to represent at least three different&amp;nbsp;things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A linear map, which takes vectors to&amp;nbsp;vectors&lt;/li&gt;
+&lt;li&gt;A bilinear form, which takes pairs of vectors to&amp;nbsp;scalars&lt;/li&gt;
+&lt;li&gt;An element of the tensor product of two vector&amp;nbsp;spaces&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The first one of these is the most familiar, if you learned linear algebra the way I did. A matrix &lt;span class="math"&gt;\(M\)&lt;/span&gt; represents a linear map which acts according to multiplying a vector by that matrix, &lt;span class="math"&gt;\(T(v) = Mv\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;For a while I thought this was the only way to think about matrices, and while it is the right way a lot of the time, sometimes people do use matrices in some other way and it&amp;#8217;s confusing to try to interpret them as linear maps. And sometimes it&amp;#8217;s helpful to view the same matrix in multiple ways. So I&amp;#8217;d like to say a little about other ways to look at a&amp;nbsp;matrix.&lt;/p&gt;
+&lt;h2&gt;Bilinear&amp;nbsp;forms&lt;/h2&gt;
+&lt;p&gt;A bilinear form is a function that takes two vectors and produces a scalar, and is linear in each argument separately. Some familiar examples are the dot product and the cross&amp;nbsp;product.&lt;/p&gt;
+&lt;p&gt;If you have a &lt;span class="math"&gt;\(m\)&lt;/span&gt; by &lt;span class="math"&gt;\(n\)&lt;/span&gt; matrix &lt;span class="math"&gt;\(M\)&lt;/span&gt;, you can define a bilinear form &lt;span class="math"&gt;\(T: \mathbb{R}^m \times \mathbb{R}^n \to \mathbb{R}\)&lt;/span&gt;&amp;nbsp;by:&lt;/p&gt;
+&lt;div class="math"&gt;$$T(u, v) = u^T M v$$&lt;/div&gt;
+&lt;p&gt;You can think of this as a sort of product of &lt;span class="math"&gt;\(u\)&lt;/span&gt; and &lt;span class="math"&gt;\(v\)&lt;/span&gt;, where the &lt;span class="math"&gt;\((i,j)\)&lt;/span&gt; entry of &lt;span class="math"&gt;\(M\)&lt;/span&gt; is the weight to put on &lt;span class="math"&gt;\(u_i\)&lt;/span&gt; times &lt;span class="math"&gt;\(v_j\)&lt;/span&gt;. (Exercise: show this by expanding the matrix-vector&amp;nbsp;products.)&lt;/p&gt;
+&lt;p&gt;The dot product is what you get if &lt;span class="math"&gt;\(M = I\)&lt;/span&gt;. The cross product in three dimensions is given by the&amp;nbsp;matrix&lt;/p&gt;
+&lt;div class="math"&gt;$$\begin{pmatrix}
+0 &amp;amp; 1 &amp;amp; -1 \\
+-1 &amp;amp; 0 &amp;amp; 1 \\
+1 &amp;amp; -1 &amp;amp; 0 \\
+\end{pmatrix}$$&lt;/div&gt;
+&lt;p&gt;A bilinear form can be used to define a quadratic function from vectors to scalars (a &lt;a href="https://en.wikipedia.org/wiki/Quadratic_form"&gt;quadratic form&lt;/a&gt;) by letting &lt;span class="math"&gt;\(u\)&lt;/span&gt; and &lt;span class="math"&gt;\(v\)&lt;/span&gt; be the same vector. For example, the probability density of a normal distribution in multiple dimensions looks&amp;nbsp;like&lt;/p&gt;
+&lt;div class="math"&gt;$$p(x) \propto \exp( -(x - \mu)^T \Sigma^{-1} (x - \mu) )$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\mu\)&lt;/span&gt; is the mean and &lt;span class="math"&gt;\(\Sigma\)&lt;/span&gt; is the covariance. The thing in the exponent is a &amp;#8220;product&amp;#8221; of &lt;span class="math"&gt;\(x - \mu\)&lt;/span&gt; with itself. So the log density peaks at &lt;span class="math"&gt;\(x = \mu\)&lt;/span&gt;, and it falls off quadratically in each direction with some curvature determined by &lt;span class="math"&gt;\(\Sigma\)&lt;/span&gt;.&lt;sup id="fnref:psd"&gt;&lt;a class="footnote-ref" href="#fn:psd"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;If you have a &lt;span class="math"&gt;\(M\)&lt;/span&gt; which represents a linear map &lt;span class="math"&gt;\(\mathbb{R}^m \to \mathbb{R}^n\)&lt;/span&gt;, you can &amp;#8220;cast&amp;#8221; it into a bilinear form: &lt;span class="math"&gt;\(u^T M v = u \cdot Mv\)&lt;/span&gt;. That is, first apply the linear map to &lt;span class="math"&gt;\(v\)&lt;/span&gt; to get another vector &lt;span class="math"&gt;\(M v\)&lt;/span&gt;, and then take the dot product of that with &lt;span class="math"&gt;\(u\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In fact, any bilinear form can be viewed this way, and that&amp;#8217;s what you do when you insist that the matrix &lt;span class="math"&gt;\(M\)&lt;/span&gt; represents a linear&amp;nbsp;map.&lt;/p&gt;
+&lt;h2&gt;Tensor&amp;nbsp;products&lt;/h2&gt;
+&lt;p&gt;The tensor product &lt;span class="math"&gt;\(u \oplus v\)&lt;/span&gt; represents the pair of vectors &lt;span class="math"&gt;\(u\)&lt;/span&gt; and &lt;span class="math"&gt;\(v\)&lt;/span&gt;, if you think of them as the pair of arguments to a bilinear map. The tensor product space is what you get if you also allow linear combinations of these. Fuller explanation: Jeremy Kun&amp;#8217;s post &lt;a href="https://jeremykun.com/2014/01/17/how-to-conquer-tensorphobia/)"&gt;How to Conquer&amp;nbsp;Tensorphobia&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As a matrix, you can represent &lt;span class="math"&gt;\(u \oplus v\)&lt;/span&gt; as the outer product &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt;. It&amp;#8217;s easy to check that &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt; is linear in each of &lt;span class="math"&gt;\(u\)&lt;/span&gt; and &lt;span class="math"&gt;\(v\)&lt;/span&gt;&amp;nbsp;separately.&lt;/p&gt;
+&lt;p&gt;If you have &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt;, you can determine the result of &lt;span class="math"&gt;\(u^T M v\)&lt;/span&gt; for any &lt;span class="math"&gt;\(M\)&lt;/span&gt;. This is the &amp;#8220;trace&amp;nbsp;trick&amp;#8221;:&lt;/p&gt;
+&lt;div class="math"&gt;$$ u^T M v = \mathop{\rm tr}(u^T M v) = \mathop{\rm tr}(M vu^T) = \mathop{\rm tr}(M (uv^T)^T) $$&lt;/div&gt;
+&lt;p&gt;So &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt; is a way to summarize &lt;span class="math"&gt;\((u, v)\)&lt;/span&gt; that plays nicely with bilinear stuff and lets you take linear combinations of pairs &lt;span class="math"&gt;\((u, v)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The example I have in mind here is covariance matrices. If &lt;span class="math"&gt;\(x\)&lt;/span&gt; is a random vector with zero mean, its covariance matrix is &lt;span class="math"&gt;\(E[xx^T]\)&lt;/span&gt;. This matrix lets you compute the expectation of any quadratic function of &lt;span class="math"&gt;\(x\)&lt;/span&gt;, that is, anything that looks like &lt;span class="math"&gt;\(E[x^T M x]\)&lt;/span&gt;.&lt;sup id="fnref:covar-basis-independent"&gt;&lt;a class="footnote-ref" href="#fn:covar-basis-independent"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;There is a way to think of &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt; as a linear map (or to think of a linear map as a linear combination of &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt;s). Jeremy Kun has a post explaining this too: &lt;a href="https://jeremykun.com/2016/03/28/tensorphobia-outer-product/"&gt;Tensorphobia and the Outer&amp;nbsp;Product&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Some things you can do with matrices and what they&amp;nbsp;mean&lt;/h2&gt;
+&lt;p&gt;Matrix&amp;nbsp;multiplication:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; and &lt;span class="math"&gt;\(B\)&lt;/span&gt; are matrices representing linear maps, then &lt;span class="math"&gt;\(AB\)&lt;/span&gt; represents the linear map of &lt;span class="math"&gt;\(A\)&lt;/span&gt; composed with the linear map of &lt;span class="math"&gt;\(B\)&lt;/span&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; represents a linear map and &lt;span class="math"&gt;\(B\)&lt;/span&gt; represents a bilinear form, &lt;span class="math"&gt;\(A^T B A\)&lt;/span&gt; represents the bilinear form you get by applying &lt;span class="math"&gt;\(A\)&lt;/span&gt; to the each argument before applying &lt;span class="math"&gt;\(B\)&lt;/span&gt;. &lt;span class="math"&gt;\(A^T B\)&lt;/span&gt; is if you apply &lt;span class="math"&gt;\(A\)&lt;/span&gt; to the first argument only, and &lt;span class="math"&gt;\(B A\)&lt;/span&gt; if you apply &lt;span class="math"&gt;\(A\)&lt;/span&gt; to the second argument&amp;nbsp;only.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; and &lt;span class="math"&gt;\(B\)&lt;/span&gt; represent linear maps, &lt;span class="math"&gt;\(A^T B\)&lt;/span&gt; represents the bilinear form you get by applying &lt;span class="math"&gt;\(A\)&lt;/span&gt; to the first argument and &lt;span class="math"&gt;\(B\)&lt;/span&gt; to the second argument, then taking a dot&amp;nbsp;product.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Transpose:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a linear map from &lt;span class="math"&gt;\(U\)&lt;/span&gt; to &lt;span class="math"&gt;\(V\)&lt;/span&gt;, &lt;span class="math"&gt;\(A^T\)&lt;/span&gt; is a linear map from &lt;span class="math"&gt;\(V^*\)&lt;/span&gt; to &lt;span class="math"&gt;\(U^*\)&lt;/span&gt;, where &lt;span class="math"&gt;\(V^*\)&lt;/span&gt; is the dual vector space of &lt;span class="math"&gt;\(V\)&lt;/span&gt;. This is a bit complicated and deserves its own post, which I won&amp;#8217;t write because others probably have already&amp;nbsp;elsewhere.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a bilinear form, &lt;span class="math"&gt;\(A^T\)&lt;/span&gt; is the bilinear form you get by switching the arguments. If &lt;span class="math"&gt;\(A\)&lt;/span&gt; is symmetric, its bilinear form is symmetric in its&amp;nbsp;arguments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a linear combination of outer products, &lt;span class="math"&gt;\(A^T\)&lt;/span&gt; is what you get if you did the outer products in the other order (&lt;span class="math"&gt;\(vu^T\)&lt;/span&gt; instead of &lt;span class="math"&gt;\(uv^T\)&lt;/span&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Eigenvectors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;An eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; of &lt;span class="math"&gt;\(A\)&lt;/span&gt;, with eigenvalue &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;, is a vector satisfying &lt;span class="math"&gt;\(Av = \lambda v\)&lt;/span&gt;. That is, the linear map of &lt;span class="math"&gt;\(A\)&lt;/span&gt; acts on the vector &lt;span class="math"&gt;\(v\)&lt;/span&gt; by scaling it by &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a bilinear form, a right eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a vector that has the property that for all &lt;span class="math"&gt;\(u\)&lt;/span&gt;, &lt;span class="math"&gt;\(u^T A v = u^T \lambda v = \lambda (u \cdot v)\)&lt;/span&gt;. A left eigenvector is the same thing but for the left argument. This property sounds like just a roundabout way to say &lt;span class="math"&gt;\(Av = \lambda v\)&lt;/span&gt; but it makes nice things happen if you have an orthonormal basis of&amp;nbsp;eigenvectors.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Diagonal:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A linear map whose matrix is a diagonal matrix is one that acts on each coordinate&amp;nbsp;independently.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A bilinear form whose matrix is diagonal is one that acts on each coordinate of the two vectors independently; it has no &amp;#8220;cross&amp;nbsp;terms&amp;#8221;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of this except for diagonality is coordinate free, so it works the same if you change to a different basis. Some of it depends on the dot product, so it only makes sense if it makes sense to take a dot product. I think it&amp;#8217;s worth noticing when you do something that depends on your choice of coordinates, or your choice of units (which affects the dot product), because it determines whether you can make these choices arbitrarily or if they matter.&lt;sup id="fnref:pca"&gt;&lt;a class="footnote-ref" href="#fn:pca"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2&gt;Bonus: quantum states and&amp;nbsp;observables&lt;/h2&gt;
+&lt;p&gt;(Disclaimer: I&amp;#8217;m not a physicist and I don&amp;#8217;t really know what I&amp;#8217;m talking&amp;nbsp;about)&lt;/p&gt;
+&lt;p&gt;In quantum mechanics, an observable is represented by a linear operator &lt;span class="math"&gt;\(A\)&lt;/span&gt; that acts on the quantum state &lt;span class="math"&gt;\(\psi\)&lt;/span&gt;. The idea is that you write &lt;span class="math"&gt;\(\psi\)&lt;/span&gt; as a linear combination of eigenstates of &lt;span class="math"&gt;\(A\)&lt;/span&gt;, and in each eigenstate the value of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is given by the corresponding eigenvalue, and when you observe &lt;span class="math"&gt;\(A\)&lt;/span&gt; the state collapses to one of the&amp;nbsp;eigenstates.&lt;/p&gt;
+&lt;p&gt;It always seemed a bit weird to me that the result of the linear operator &lt;span class="math"&gt;\(A\)&lt;/span&gt; doesn&amp;#8217;t have a physical meaning and is hardly ever talked about, as if the operator exists only to be a bag of&amp;nbsp;eigenstates.&lt;/p&gt;
+&lt;p&gt;However, the expectation value of &lt;span class="math"&gt;\(A\)&lt;/span&gt; in the state &lt;span class="math"&gt;\(\psi\)&lt;/span&gt; is &lt;span class="math"&gt;\(\langle \psi | A | \psi \rangle\)&lt;/span&gt; (which is basically &lt;span class="math"&gt;\(\psi^T A \psi\)&lt;/span&gt; in physicists&amp;#8217; notation). So, maybe another way to think of a quantum observable is as a bilinear form, which when applied to a quantum state gives its expected&amp;nbsp;value?&lt;/p&gt;
+&lt;p&gt;Also, the density matrix corresponding to &lt;span class="math"&gt;\(\psi\)&lt;/span&gt; is &lt;span class="math"&gt;\(| \psi \rangle \langle \psi |\)&lt;/span&gt;, which is just the outer product of &lt;span class="math"&gt;\(\psi\)&lt;/span&gt; with itself. As we&amp;#8217;ve seen, this is enough information to determine the expected value of any observable &lt;span class="math"&gt;\(A\)&lt;/span&gt;. And it makes sense that you can take linear combinations of these to get mixed states, and the expected values of observables factor through to their expected values in the pure&amp;nbsp;states.&lt;/p&gt;
+&lt;p&gt;But this story only accounts for expected values, and a quantum state is supposed to determine all the probabilities of each result. So it seems like eigenstates still have to have special meaning physically. I&amp;#8217;m still confused about&amp;nbsp;this.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:psd"&gt;
+&lt;p&gt;Technically this also depends on the fact that covariance matrices are positive definite, which is basically a condition that the &amp;#8220;product&amp;#8221; of any vector with itself is not negative.&amp;#160;&lt;a class="footnote-backref" href="#fnref:psd" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:covar-basis-independent"&gt;
+&lt;p&gt;I like this because it shows that the covariance matrix represents an object that is coordinate-independent; it doesn&amp;#8217;t just tell you the covariance between &lt;span class="math"&gt;\(x_i\)&lt;/span&gt; and &lt;span class="math"&gt;\(x_j\)&lt;/span&gt;, which you can get by reading off the entries, but also the covariance between linear functions of &lt;span class="math"&gt;\(x\)&lt;/span&gt; that are not coordinate-aligned.&amp;#160;&lt;a class="footnote-backref" href="#fnref:covar-basis-independent" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:pca"&gt;
+&lt;p&gt;An example that comes to mind is &lt;a href="https://en.wikipedia.org/wiki/Principal_component_analysis"&gt;&lt;span class="caps"&gt;PCA&lt;/span&gt;&lt;/a&gt;. &lt;span class="caps"&gt;PCA&lt;/span&gt; cares about the Euclidean distances between the points, so it only makes sense when it would make to take dot products. In particular this means that if you scale some of your variables, the result of &lt;span class="caps"&gt;PCA&lt;/span&gt; will be different!&amp;#160;&lt;a class="footnote-backref" href="#fnref:pca" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="articles"></category></entry><entry><title>Entropy Is Relative</title><link href="//luanths.github.io/articles/entropy-is-relative/" rel="alternate"></link><published>2018-02-27T00:00:00-05:00</published><updated>2018-02-27T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-02-27:/articles/entropy-is-relative/</id><content type="html">&lt;p&gt;The entropy of a random quantity &lt;span class="math"&gt;\(X\)&lt;/span&gt; is the &amp;#8220;amount of uncertainty&amp;#8221; or &amp;#8220;information content&amp;#8221; in &lt;span class="math"&gt;\(X\)&lt;/span&gt;. It is defined&amp;nbsp;as:&lt;/p&gt;
+&lt;div class="math"&gt;$$ H(X) = -E[ \log P(X) ] $$&lt;/div&gt;
+&lt;p&gt;It&amp;#8217;s the number of bits you need to specify the value of &lt;span class="math"&gt;\(X\)&lt;/span&gt; if you know its distribution, or equivalently, the number of random bits you need to generate &lt;span class="math"&gt;\(X\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;This makes sense for discrete-valued &lt;span class="math"&gt;\(X\)&lt;/span&gt;, like coin flips and letters in English text. But what about continuous distributions? What is the entropy of a normal&amp;nbsp;distribution?&lt;/p&gt;
+&lt;p&gt;This post is to try to make sense of&amp;nbsp;this.&lt;/p&gt;
+&lt;h2&gt;Infinity?&lt;/h2&gt;
+&lt;p&gt;If you think about it, the entropy of a continuous distribution ought to be infinite. After all, a draw from a normal distribution is a real number which has an infinite number of digits to&amp;nbsp;describe.&lt;/p&gt;
+&lt;p&gt;But this isn&amp;#8217;t very useful. Somehow a normal distribution with variance 1 seems less uncertain than a normal distribution with variance 2, and we&amp;#8217;d like to capture&amp;nbsp;that.&lt;/p&gt;
+&lt;h2&gt;Differential&amp;nbsp;entropy&lt;/h2&gt;
+&lt;p&gt;A first idea is to just reuse the same definition, but with probability density instead of&amp;nbsp;mass:&lt;/p&gt;
+&lt;div class="math"&gt;$$ h(X) = -E[ \log p(X) ] $$&lt;/div&gt;
+&lt;p&gt;But this is kind of fishy. Probability density can be greater than 1, so &lt;span class="math"&gt;\(h(X)\)&lt;/span&gt; can go negative. Also, the density has units of &lt;span class="math"&gt;\(1/dx\)&lt;/span&gt;, but we&amp;#8217;re taking the log of it? It turns out that we&amp;#8217;ve actually defined the &lt;a href="https://en.wikipedia.org/wiki/Differential_entropy"&gt;differential entropy&lt;/a&gt;, which sort of looks like entropy but doesn&amp;#8217;t have all the nice&amp;nbsp;properties.&lt;/p&gt;
+&lt;h2&gt;Relative&amp;nbsp;entropy&lt;/h2&gt;
+&lt;p&gt;Better is the idea of relative entropy (also &lt;a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence"&gt;&lt;span class="caps"&gt;KL&lt;/span&gt; divergence&lt;/a&gt;). If we have a reference distribution with density &lt;span class="math"&gt;\(q\)&lt;/span&gt;, then the relative entropy with respect to &lt;span class="math"&gt;\(q\)&lt;/span&gt; is &lt;sup id="fnref:nonstandard"&gt;&lt;a class="footnote-ref" href="#fn:nonstandard"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class="math"&gt;$$ H_q(X) = -E[ \log \frac{p(X)}{q(X)} ] $$&lt;/div&gt;
+&lt;p&gt;The thing in the log is a ratio of densities, so at least the units check out. And if you let &lt;span class="math"&gt;\(q\)&lt;/span&gt; be a general measure rather than a distribution, it subsumes both discrete entropy and differential entropy as special cases (when &lt;span class="math"&gt;\(q\)&lt;/span&gt; is the counting measure or the Lebesgue measure,&amp;nbsp;respectively).&lt;/p&gt;
+&lt;p&gt;But what does it mean? It&amp;#8217;s sometimes described as &amp;#8220;the difference between the number of bits to encode &lt;span class="math"&gt;\(X\)&lt;/span&gt; using a code optimized for &lt;span class="math"&gt;\(q\)&lt;/span&gt; and a code optimized for &lt;span class="math"&gt;\(p\)&lt;/span&gt;,&amp;#8221; but that never made as much sense to me as regular&amp;nbsp;entropy.&lt;/p&gt;
+&lt;h2&gt;The&amp;nbsp;connection&lt;/h2&gt;
+&lt;p&gt;To that end, I found it helpful to think back to regular entropy, interpreting it as the number of random bits you need to sample from the distribution of &lt;span class="math"&gt;\(X\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;How many bits do you need to sample from a continuous distribution? In some sense the answer is still infinity, but no one was going to use infinity digits of the answer anyway. Instead we can ask how many bits are needed to generate &lt;span class="math"&gt;\(X\)&lt;/span&gt; up to &lt;span class="math"&gt;\(n\)&lt;/span&gt; digits of&amp;nbsp;precision.&lt;/p&gt;
+&lt;p&gt;For now let&amp;#8217;s imagine &lt;span class="math"&gt;\(X\)&lt;/span&gt; takes on values from &lt;span class="math"&gt;\([0, 1)\)&lt;/span&gt;, so we can easily represent it as a sequence of binary digits. Then the first &lt;span class="math"&gt;\(n\)&lt;/span&gt; digits is just a binary string, so it has a well defined&amp;nbsp;entropy.&lt;/p&gt;
+&lt;p&gt;In general this will depend on &lt;span class="math"&gt;\(n\)&lt;/span&gt;. But if &lt;span class="math"&gt;\(X\)&lt;/span&gt; has a continuous density, after some point all the remaining digits will be effectively uniform, so each additional digit will require an additional random bit. In the limit of large &lt;span class="math"&gt;\(n\)&lt;/span&gt;, the number of bits we need will approach &lt;span class="math"&gt;\(h(X) + n\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Restating this a bit, we can say that the differential entropy is the number of bits you need to determine &lt;span class="math"&gt;\(X\)&lt;/span&gt; to within an interval of length &lt;span class="math"&gt;\(2^{-n}\)&lt;/span&gt;, minus &lt;span class="math"&gt;\(n\)&lt;/span&gt; which is the number of bits you would need to specify that interval naively.&amp;nbsp;Cool.&lt;/p&gt;
+&lt;p&gt;But notice that we&amp;#8217;re implicitly using Lebesgue measure here when we talk about interval length and digits of precision. So we can generalize this to relative entropy with respect to any reference measure &lt;span class="math"&gt;\(q\)&lt;/span&gt;: it&amp;#8217;s the number of bits you need to determine the result to within a set of measure &lt;span class="math"&gt;\(2^{-n}\)&lt;/span&gt;, as measured by &lt;span class="math"&gt;\(q\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;And now we see that we get regular entropy back when &lt;span class="math"&gt;\(q\)&lt;/span&gt; is the counting measure! If we determine &lt;span class="math"&gt;\(X\)&lt;/span&gt; to within a set of counting measure 1, then we&amp;#8217;ve determined &lt;span class="math"&gt;\(X\)&lt;/span&gt;.&lt;/p&gt;
+&lt;h2&gt;Maximum entropy is&amp;nbsp;relative&lt;/h2&gt;
+&lt;p&gt;The maximum entropy distribution is the uniform distribution, because it represents the least state of knowledge about &lt;span class="math"&gt;\(X\)&lt;/span&gt;, the state of maximum ignorance. Or is&amp;nbsp;it?&lt;/p&gt;
+&lt;p&gt;It turns out that the distribution which maximizes relative entropy with respect to &lt;span class="math"&gt;\(q\)&lt;/span&gt; is the one where &lt;span class="math"&gt;\(p(x)\)&lt;/span&gt; is proportional to &lt;span class="math"&gt;\(q(x)\)&lt;/span&gt;.&lt;sup id="fnref:proportional"&gt;&lt;a class="footnote-ref" href="#fn:proportional"&gt;2&lt;/a&gt;&lt;/sup&gt; So the uniform distribution is max entropy only because we&amp;#8217;re using a uniform reference&amp;nbsp;measure.&lt;/p&gt;
+&lt;p&gt;This also solves a puzzle of how max entropy works with change of variables. Example: Suppose you have a coin that lands heads with probability &lt;span class="math"&gt;\(p\)&lt;/span&gt;, and you want a prior on &lt;span class="math"&gt;\(p\)&lt;/span&gt;. You have no idea, so you assign it the uniform distribution over &lt;span class="math"&gt;\([0, 1]\)&lt;/span&gt;, because it&amp;#8217;s the maximum entropy distribution. But what if you instead wanted a prior on &lt;span class="math"&gt;\(\theta = \log p\)&lt;/span&gt; instead? You don&amp;#8217;t know anything about &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; either, so you ought to assign a maximum entropy uniform distribution over &lt;span class="math"&gt;\((-\infty, 0]\)&lt;/span&gt;. But that isn&amp;#8217;t the same as making &lt;span class="math"&gt;\(p\)&lt;/span&gt; uniform, so what&amp;nbsp;gives?&lt;/p&gt;
+&lt;p&gt;The answer is that you have to fix a reference measure, which can be either uniform in linear space or log space but not both. Maximum entropy can&amp;#8217;t help you&amp;nbsp;decide.&lt;/p&gt;
+&lt;p&gt;Even in the discrete case, there&amp;#8217;s a version of this reference measure problem when it&amp;#8217;s not clear how to define the set of possible values. The uniform categorical distribution depends on what the categories are, and categories are made by&amp;nbsp;people.&lt;/p&gt;
+&lt;h2&gt;A word on thermodynamic&amp;nbsp;entropy&lt;/h2&gt;
+&lt;p&gt;Thermodynamic entropy sure doesn&amp;#8217;t seem relative. It&amp;#8217;s measured in units like joules per kelvin and it seems to have real physical consequences, like the fact that you can&amp;#8217;t un-fry an egg. But thermodynamical entropy is supposed to be related to information entropy; can we fit it into the above&amp;nbsp;picture?&lt;/p&gt;
+&lt;p&gt;As far as I can tell, everything in statistical mechanics depends on the assumption (axiom?) that all microstates of an &lt;a href="https://ocw.mit.edu/courses/physics/8-044-statistical-physics-i-spring-2013/readings-notes-slides/MIT8_044S13_mcrocanoncl.pdf"&gt;isolated system in equilibrium&lt;/a&gt; are equally probable. That&amp;#8217;s a reference&amp;nbsp;measure!&lt;/p&gt;
+&lt;p&gt;So I think you could say the second law of thermodynamics is really about the &lt;em&gt;relative&lt;/em&gt; entropy of the universe, with respect to its ultimate stationary&amp;nbsp;distribution.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:nonstandard"&gt;
+&lt;p&gt;This definition is non-standard; relative entropy is usually defined as the negative of the above and spelled &lt;span class="math"&gt;\(D(p \Vert q)\)&lt;/span&gt; or &lt;span class="math"&gt;\(KL(p \Vert q)\)&lt;/span&gt;. I defined it this way to make it more similar to the definition of entropy.&amp;#160;&lt;a class="footnote-backref" href="#fnref:nonstandard" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:proportional"&gt;
+&lt;p&gt;More technically, &lt;span class="math"&gt;\(p\)&lt;/span&gt; has a uniform density with respect to the measure &lt;span class="math"&gt;\(q\)&lt;/span&gt;.&amp;#160;&lt;a class="footnote-backref" href="#fnref:proportional" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="articles"></category></entry><entry><title>Regularizers Are Not Priors</title><link href="//luanths.github.io/articles/not-priors/" rel="alternate"></link><published>2018-02-22T00:00:00-05:00</published><updated>2018-02-22T00:00:00-05:00</updated><author><name></name></author><id>tag:luanths.github.io,2018-02-22:/articles/not-priors/</id><content type="html">&lt;p&gt;In statistics and machine learning there is an idea called &lt;em&gt;regularization&lt;/em&gt;, which is when you penalize complex models in favor of simpler models rather than just finding the one model that best fits the observed data. The reason to do this is that simpler models are more likely to generalize; overly complex models can &amp;#8220;overfit&amp;#8221;, picking up on false patterns in the training sample that don&amp;#8217;t hold in the larger&amp;nbsp;population.&lt;/p&gt;
+&lt;p class="figure"&gt;&lt;img alt="" src="/images/PRML_Figure1.4d.png" width="50%"&gt;
+Overfitting: the red curve is a 9th-order polynomial fit to the 9 data points in blue, which were generated according to the green curve. From Bishop&amp;#8217;s &lt;a href="https://www.microsoft.com/en-us/research/people/cmbishop/#!prml-book"&gt;Pattern Recognition and Machine Learning&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you squint, adding regularization is sort of like having a Bayesian prior over possible models, where simpler models have more prior probability than complex models. And indeed, people often talk about it that way, for instance in scikit-learn&amp;#8217;s documentation of &lt;a href="lasso"&gt;Lasso&lt;/a&gt; and &lt;a href="elasticnet"&gt;ElasticNet&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But a real Bayesian prior is different! In some important ways. This confused me when I was first learning about Bayesian methods, so this post is to explain the&amp;nbsp;difference.&lt;/p&gt;
+&lt;h2&gt;Running example: regularized least-squares&amp;nbsp;regression&lt;/h2&gt;
+&lt;p&gt;Suppose we have some data consisting of pairs &lt;span class="math"&gt;\((x_i, y_i)\)&lt;/span&gt; and we would like to fit a model &lt;span class="math"&gt;\(y = f(x; \theta)\)&lt;/span&gt;.&lt;sup id="fnref:fxtheta"&gt;&lt;a class="footnote-ref" href="#fn:fxtheta"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;In ordinary least squares, the objective is to find the &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; that minimizes the sum of squared&amp;nbsp;errors:&lt;/p&gt;
+&lt;div class="math"&gt;$$ \hat \theta_{OLS} = \arg \min_\theta \sum_i (y_i - f(x_i; \theta))^2 $$&lt;/div&gt;
+&lt;p&gt;However, this problem may produce an overfit solution or even be&amp;nbsp;underdetermined.&lt;/p&gt;
+&lt;p&gt;Regularized least squares is when you add an extra term that depends on &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; in order to constrain the solution and make the problem more well behaved. One common form of this is L2 regularization or ridge regression, which adds a penalty term on the L2 norm of &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;$$ \hat \theta_{Ridge} = \arg \min_\theta \left( \sum_i (y_i - f(x_i; \theta))^2 + \Vert\theta\Vert^2 \right) $$&lt;/div&gt;
+&lt;p&gt;This can make sense if &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; is a vector of coefficients; it can discourage large coefficients that happen to cancel out near the observed data points, such as in the intro&amp;nbsp;figure.&lt;/p&gt;
+&lt;h2&gt;The connection to&amp;nbsp;probability&lt;/h2&gt;
+&lt;p&gt;So far we haven&amp;#8217;t said anything about probability. However, it turns out we can cast our modeling in a probabilistic light by interpreting the loss as a negative log&amp;nbsp;likelihood.&lt;/p&gt;
+&lt;p&gt;In particular, let&amp;#8217;s now imagine our model is probabilistic, so that &lt;span class="math"&gt;\(y\)&lt;/span&gt; follows a distribution that depends on &lt;span class="math"&gt;\(x\)&lt;/span&gt;. If we let&lt;sup id="fnref:gaussian"&gt;&lt;a class="footnote-ref" href="#fn:gaussian"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class="math"&gt;$$p(y \mid x; \theta) \propto e^{-(y - f(x; \theta))^2}$$&lt;/div&gt;
+&lt;p&gt;then the least squares objective from before boils down&amp;nbsp;to&lt;/p&gt;
+&lt;div class="math"&gt;$$\hat\theta_{ML} = \arg \max_\theta p(y \mid x; \theta)$$&lt;/div&gt;
+&lt;p&gt;This is called maximum likelihood. Pretty intuitive: find the &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; which assigns the highest probability to the&amp;nbsp;data.&lt;/p&gt;
+&lt;p&gt;In this framework, we can incorporate the regularization term by imagining we have a prior on &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;,&lt;/p&gt;
+&lt;div class="math"&gt;$$p(\theta) \propto e^{- \Vert\theta\Vert^2}$$&lt;/div&gt;
+&lt;p&gt;And now we&amp;#8217;re maximizing &lt;span class="math"&gt;\(p(y \mid x; \theta) p(\theta)\)&lt;/span&gt;. This is called &lt;a href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation"&gt;maximum a posteriori estimation&lt;/a&gt; or &lt;span class="caps"&gt;MAP&lt;/span&gt; for&amp;nbsp;short.&lt;/p&gt;
+&lt;div class="math"&gt;$$\hat\theta_{MAP} = \arg \max_\theta p(y \mid x; \theta) p(\theta)$$&lt;/div&gt;
+&lt;p&gt;This is what people mean when they say, for example, that L2 regularization corresponds to a Gaussian prior on the&amp;nbsp;coefficients.&lt;/p&gt;
+&lt;p&gt;So are we Bayes&amp;nbsp;now?&lt;/p&gt;
+&lt;h2&gt;It&amp;#8217;s not the&amp;nbsp;same&lt;/h2&gt;
+&lt;p&gt;The biggest way in which this is different from fully Bayesian updating is that it produces a point estimate, a single value &lt;span class="math"&gt;\(\hat\theta\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In Bayesian inference, the result of updating on new data &lt;em&gt;is&lt;/em&gt; the posterior distribution of &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;. The posterior represents your belief state after seeing the data; different points in that distribution are different possible models consistent with the data; a wider distribution means more uncertainty about the model. The posterior becomes your new prior going forward, and additional data can further inform your belief about the correct model. At no point does your belief state collapse to a single value of &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Let&amp;#8217;s say after having observed all the &lt;span class="math"&gt;\((x_i, y_i)\)&lt;/span&gt; we want to make a prediction at a new point &lt;span class="math"&gt;\(x^*\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The usual thing to do, whether you&amp;#8217;re using a regularizer or not, would be to use the &lt;span class="math"&gt;\(\hat\theta\)&lt;/span&gt; from your learning algorithm to predict &lt;span class="math"&gt;\(y^* = f(x^*; \hat\theta)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The fully Bayesian thing to do would be to integrate over your posterior distribution &lt;span class="math"&gt;\(p(\theta \mid D)\)&lt;/span&gt;, obtaining a &lt;em&gt;predictive distribution&lt;/em&gt; on &lt;span class="math"&gt;\(y^*\)&lt;/span&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;$$p(y^* \mid x^*, D) = \int p(y^* \mid x^*, \theta) p(\theta \mid D) d\theta$$&lt;/div&gt;
+&lt;p&gt;This takes into account your uncertainty about &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;, and &amp;#8220;pushes it forward&amp;#8221; into uncertainty about &lt;span class="math"&gt;\(y^*\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Obviously in many cases this is a less tractable thing to do; but it does get at something that the point estimate doesn&amp;#8217;t, and sometimes it may be worth trying to do something more like the Bayesian&amp;nbsp;approach.&lt;/p&gt;
+&lt;p&gt;Machine learning researchers have been trying to do this! Here are some blog posts about applying Bayesian techniques to deep&amp;nbsp;models.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Alex Kendall: &lt;a href="https://alexgkendall.com/computer_vision/bayesian_deep_learning_for_safe_ai/"&gt;Deep Learning Is Not Good Enough, We Need Bayesian Deep Learning for Safe &lt;span class="caps"&gt;AI&lt;/span&gt;&lt;/a&gt;&amp;nbsp;(2017)&lt;/li&gt;
+&lt;li&gt;Yarin Gal: &lt;a href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html"&gt;What My Deep Model Doesn&amp;#8217;t Know&lt;/a&gt;&amp;nbsp;(2015)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;More things about Bayes and&amp;nbsp;non-Bayes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class="caps"&gt;MAP&lt;/span&gt; estimation, the thing where you find the maximum of the posterior and go with it, is not well defined under change of variables. If you have a model parametrized by &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;, and you decide, say, to set &lt;span class="math"&gt;\(u = 1/\theta\)&lt;/span&gt; and work with that instead, the posterior max &lt;span class="math"&gt;\(\hat u_{MAP}\)&lt;/span&gt; need not be equal to &lt;span class="math"&gt;\(1/\hat\theta_{MAP}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In contrast, Bayes doesn&amp;#8217;t care what variables you choose, as long as you take care to transform your prior density function appropriately for the change of variables.&lt;sup id="fnref:variables"&gt;&lt;a class="footnote-ref" href="#fn:variables"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you actually look at Bayes&amp;#8217; rule, there&amp;#8217;s one piece we didn&amp;#8217;t about: the normalization&amp;nbsp;constant.&lt;/p&gt;
+&lt;p&gt;
+&lt;div class="math"&gt;$$ p(D) = \int p(D \mid \theta) p(\theta) d\theta $$&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;This factor is safe to ignore when optimizing over &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;. But it has a nice interpretation: it&amp;#8217;s the probability of seeing the data &lt;span class="math"&gt;\(D\)&lt;/span&gt;, averaged over the prior &lt;span class="math"&gt;\(p(\theta)\)&lt;/span&gt;. This is sometimes called the model evidence, and you can think of it as measuring how good your prior was in light of seeing the data. You can even use it to compare different priors.&lt;sup id="fnref:bmc"&gt;&lt;a class="footnote-ref" href="#fn:bmc"&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Probability distributions have to sum up to one. This relates to the previous point. Sometimes this doesn&amp;#8217;t matter but sometimes it forces you to not assign more probability mass than you have. Compared to inventing a loss function out of thin air, sticking to a probabilistic framework feels to me like almost a form of type checking that rules out some things that obviously make no&amp;nbsp;sense.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope I&amp;#8217;ve managed to convey that Bayesian modeling really does bring more to the table and it&amp;#8217;s not just the same as an additional term on your loss function. I often find the Bayesian answers intuitively appealing; I&amp;#8217;m not saying it&amp;#8217;s the appropriate tool for every problem, but it&amp;#8217;s certainly worth learning more&amp;nbsp;about.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Update (April 2018): Here&amp;#8217;s a &lt;a href="http://raginrayguns.tumblr.com/post/163079571377/bayes-a-kinda-sorta-masterpost"&gt;post from raginrayguns on tumblr&lt;/a&gt; that makes a similar&amp;nbsp;point.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tl;dr: Regularization is not the point of the prior. Even when we’re not regularizing, the prior is an indispensable part of useful machinery for producing “hedged” estimates, which are good in all plausible&amp;nbsp;worlds.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The post makes a case for why you might want to do the Bayesian thing, which I didn&amp;#8217;t really say anything about here. It has an example of an estimation problem where using Bayesian reasoning produces a better estimator (according to a specified loss function, which happens to be mean squared error) than maximum likelihood, even with a flat&amp;nbsp;prior.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Update (February 2020): More&amp;nbsp;links.&lt;/p&gt;
+&lt;p&gt;Andrew Gordon Wilson, &lt;a href="https://cims.nyu.edu/~andrewgw/caseforbdl/"&gt;The Case for Bayesian Deep Learning&lt;/a&gt;: &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The key distinguishing property of a Bayesian approach is marginalization instead of optimization, not the prior, or Bayes rule&amp;nbsp;[&amp;#8230;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Thomas P. Minka, &lt;a href=""&gt;Bayesian model averaging is not model combination&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bayesian model averaging [&amp;#8230;] answers the question: &amp;#8220;Given that all of the data so far was generated by &lt;em&gt;exactly one&lt;/em&gt; of the hypotheses, what is the probability of observing the new [data&amp;nbsp;point]?&amp;#8221;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It&amp;#8217;s an important caveat. A Bayesian average over a particular space of models may not describe what you are really trying to do, and it can be inferior to a non-Bayesian approach that is free to combine the same models in some other&amp;nbsp;way.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:fxtheta"&gt;
+&lt;p&gt;Here, I mean that &lt;span class="math"&gt;\(f\)&lt;/span&gt; is some family of models parameterized by &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;. For example, &lt;span class="math"&gt;\(f\)&lt;/span&gt; could be the family of 9th-order polynomials, and &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; the coefficients of the polynomial.&amp;#160;&lt;a class="footnote-backref" href="#fnref:fxtheta" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:gaussian"&gt;
+&lt;p&gt;You may know this as the density of a &lt;a href="https://en.wikipedia.org/wiki/Normal_distribution"&gt;Gaussian distribution&lt;/a&gt; centered around &lt;span class="math"&gt;\(y = f(x; \theta)\)&lt;/span&gt;.&amp;#160;&lt;a class="footnote-backref" href="#fnref:gaussian" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:variables"&gt;
+&lt;p&gt;Max likelihood also doesn&amp;#8217;t care, since there&amp;#8217;s no prior at all. Also, if &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; is discrete, then &lt;span class="caps"&gt;MAP&lt;/span&gt; is well defined again: it&amp;#8217;s the one value of &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; with the most probability mass. It&amp;#8217;s still only as meaningful as a plurality winner though.&amp;#160;&lt;a class="footnote-backref" href="#fnref:variables" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:bmc"&gt;
+&lt;p&gt;For more on this kind of stuff, I recommend David MacKay&amp;#8217;s textbook &lt;a href="http://www.inference.org.uk/itila/book.html"&gt;Inference Theory, Inference, and Learning Algorithms&lt;/a&gt;, in particular chapter 3 (&amp;#8220;More about Inference&amp;#8221;) and chapter 28 (&amp;#8220;Model Comparison and Occam&amp;#8217;s Razor&amp;#8221;).&amp;#160;&lt;a class="footnote-backref" href="#fnref:bmc" title="Jump back to footnote 4 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="articles"></category></entry></feed>

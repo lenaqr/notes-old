@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Three Ways to Look at a&nbsp;Matrix | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/articles/matrix-three-ways/" rel="bookmark"
+         title="Permalink to Three Ways to Look at a Matrix">Three Ways to Look at a&nbsp;Matrix</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>A matrix can be used to represent at least three different&nbsp;things:</p>
+<ol>
+<li>A linear map, which takes vectors to&nbsp;vectors</li>
+<li>A bilinear form, which takes pairs of vectors to&nbsp;scalars</li>
+<li>An element of the tensor product of two vector&nbsp;spaces</li>
+</ol>
+<p>The first one of these is the most familiar, if you learned linear algebra the way I did. A matrix <span class="math">\(M\)</span> represents a linear map which acts according to multiplying a vector by that matrix, <span class="math">\(T(v) = Mv\)</span>.</p>
+<p>For a while I thought this was the only way to think about matrices, and while it is the right way a lot of the time, sometimes people do use matrices in some other way and it&#8217;s confusing to try to interpret them as linear maps. And sometimes it&#8217;s helpful to view the same matrix in multiple ways. So I&#8217;d like to say a little about other ways to look at a&nbsp;matrix.</p>
+<h2>Bilinear&nbsp;forms</h2>
+<p>A bilinear form is a function that takes two vectors and produces a scalar, and is linear in each argument separately. Some familiar examples are the dot product and the cross&nbsp;product.</p>
+<p>If you have a <span class="math">\(m\)</span> by <span class="math">\(n\)</span> matrix <span class="math">\(M\)</span>, you can define a bilinear form <span class="math">\(T: \mathbb{R}^m \times \mathbb{R}^n \to \mathbb{R}\)</span>&nbsp;by:</p>
+<div class="math">$$T(u, v) = u^T M v$$</div>
+<p>You can think of this as a sort of product of <span class="math">\(u\)</span> and <span class="math">\(v\)</span>, where the <span class="math">\((i,j)\)</span> entry of <span class="math">\(M\)</span> is the weight to put on <span class="math">\(u_i\)</span> times <span class="math">\(v_j\)</span>. (Exercise: show this by expanding the matrix-vector&nbsp;products.)</p>
+<p>The dot product is what you get if <span class="math">\(M = I\)</span>. The cross product in three dimensions is given by the&nbsp;matrix</p>
+<div class="math">$$\begin{pmatrix}
+0 &amp; 1 &amp; -1 \\
+-1 &amp; 0 &amp; 1 \\
+1 &amp; -1 &amp; 0 \\
+\end{pmatrix}$$</div>
+<p>A bilinear form can be used to define a quadratic function from vectors to scalars (a <a href="https://en.wikipedia.org/wiki/Quadratic_form">quadratic form</a>) by letting <span class="math">\(u\)</span> and <span class="math">\(v\)</span> be the same vector. For example, the probability density of a normal distribution in multiple dimensions looks&nbsp;like</p>
+<div class="math">$$p(x) \propto \exp( -(x - \mu)^T \Sigma^{-1} (x - \mu) )$$</div>
+<p>where <span class="math">\(\mu\)</span> is the mean and <span class="math">\(\Sigma\)</span> is the covariance. The thing in the exponent is a &#8220;product&#8221; of <span class="math">\(x - \mu\)</span> with itself. So the log density peaks at <span class="math">\(x = \mu\)</span>, and it falls off quadratically in each direction with some curvature determined by <span class="math">\(\Sigma\)</span>.<sup id="fnref:psd"><a class="footnote-ref" href="#fn:psd">1</a></sup></p>
+<p>If you have a <span class="math">\(M\)</span> which represents a linear map <span class="math">\(\mathbb{R}^m \to \mathbb{R}^n\)</span>, you can &#8220;cast&#8221; it into a bilinear form: <span class="math">\(u^T M v = u \cdot Mv\)</span>. That is, first apply the linear map to <span class="math">\(v\)</span> to get another vector <span class="math">\(M v\)</span>, and then take the dot product of that with <span class="math">\(u\)</span>.</p>
+<p>In fact, any bilinear form can be viewed this way, and that&#8217;s what you do when you insist that the matrix <span class="math">\(M\)</span> represents a linear&nbsp;map.</p>
+<h2>Tensor&nbsp;products</h2>
+<p>The tensor product <span class="math">\(u \oplus v\)</span> represents the pair of vectors <span class="math">\(u\)</span> and <span class="math">\(v\)</span>, if you think of them as the pair of arguments to a bilinear map. The tensor product space is what you get if you also allow linear combinations of these. Fuller explanation: Jeremy Kun&#8217;s post <a href="https://jeremykun.com/2014/01/17/how-to-conquer-tensorphobia/)">How to Conquer&nbsp;Tensorphobia</a></p>
+<p>As a matrix, you can represent <span class="math">\(u \oplus v\)</span> as the outer product <span class="math">\(uv^T\)</span>. It&#8217;s easy to check that <span class="math">\(uv^T\)</span> is linear in each of <span class="math">\(u\)</span> and <span class="math">\(v\)</span>&nbsp;separately.</p>
+<p>If you have <span class="math">\(uv^T\)</span>, you can determine the result of <span class="math">\(u^T M v\)</span> for any <span class="math">\(M\)</span>. This is the &#8220;trace&nbsp;trick&#8221;:</p>
+<div class="math">$$ u^T M v = \mathop{\rm tr}(u^T M v) = \mathop{\rm tr}(M vu^T) = \mathop{\rm tr}(M (uv^T)^T) $$</div>
+<p>So <span class="math">\(uv^T\)</span> is a way to summarize <span class="math">\((u, v)\)</span> that plays nicely with bilinear stuff and lets you take linear combinations of pairs <span class="math">\((u, v)\)</span>.</p>
+<p>The example I have in mind here is covariance matrices. If <span class="math">\(x\)</span> is a random vector with zero mean, its covariance matrix is <span class="math">\(E[xx^T]\)</span>. This matrix lets you compute the expectation of any quadratic function of <span class="math">\(x\)</span>, that is, anything that looks like <span class="math">\(E[x^T M x]\)</span>.<sup id="fnref:covar-basis-independent"><a class="footnote-ref" href="#fn:covar-basis-independent">2</a></sup></p>
+<p>There is a way to think of <span class="math">\(uv^T\)</span> as a linear map (or to think of a linear map as a linear combination of <span class="math">\(uv^T\)</span>s). Jeremy Kun has a post explaining this too: <a href="https://jeremykun.com/2016/03/28/tensorphobia-outer-product/">Tensorphobia and the Outer&nbsp;Product</a></p>
+<h2>Some things you can do with matrices and what they&nbsp;mean</h2>
+<p>Matrix&nbsp;multiplication:</p>
+<ul>
+<li>
+<p>If <span class="math">\(A\)</span> and <span class="math">\(B\)</span> are matrices representing linear maps, then <span class="math">\(AB\)</span> represents the linear map of <span class="math">\(A\)</span> composed with the linear map of <span class="math">\(B\)</span>.</p>
+</li>
+<li>
+<p>If <span class="math">\(A\)</span> represents a linear map and <span class="math">\(B\)</span> represents a bilinear form, <span class="math">\(A^T B A\)</span> represents the bilinear form you get by applying <span class="math">\(A\)</span> to the each argument before applying <span class="math">\(B\)</span>. <span class="math">\(A^T B\)</span> is if you apply <span class="math">\(A\)</span> to the first argument only, and <span class="math">\(B A\)</span> if you apply <span class="math">\(A\)</span> to the second argument&nbsp;only.</p>
+</li>
+<li>
+<p>If <span class="math">\(A\)</span> and <span class="math">\(B\)</span> represent linear maps, <span class="math">\(A^T B\)</span> represents the bilinear form you get by applying <span class="math">\(A\)</span> to the first argument and <span class="math">\(B\)</span> to the second argument, then taking a dot&nbsp;product.</p>
+</li>
+</ul>
+<p>Transpose:</p>
+<ul>
+<li>
+<p>If <span class="math">\(A\)</span> is a linear map from <span class="math">\(U\)</span> to <span class="math">\(V\)</span>, <span class="math">\(A^T\)</span> is a linear map from <span class="math">\(V^*\)</span> to <span class="math">\(U^*\)</span>, where <span class="math">\(V^*\)</span> is the dual vector space of <span class="math">\(V\)</span>. This is a bit complicated and deserves its own post, which I won&#8217;t write because others probably have already&nbsp;elsewhere.</p>
+</li>
+<li>
+<p>If <span class="math">\(A\)</span> is a bilinear form, <span class="math">\(A^T\)</span> is the bilinear form you get by switching the arguments. If <span class="math">\(A\)</span> is symmetric, its bilinear form is symmetric in its&nbsp;arguments.</p>
+</li>
+<li>
+<p>If <span class="math">\(A\)</span> is a linear combination of outer products, <span class="math">\(A^T\)</span> is what you get if you did the outer products in the other order (<span class="math">\(vu^T\)</span> instead of <span class="math">\(uv^T\)</span>).</p>
+</li>
+</ul>
+<p>Eigenvectors:</p>
+<ul>
+<li>
+<p>An eigenvector <span class="math">\(v\)</span> of <span class="math">\(A\)</span>, with eigenvalue <span class="math">\(\lambda\)</span>, is a vector satisfying <span class="math">\(Av = \lambda v\)</span>. That is, the linear map of <span class="math">\(A\)</span> acts on the vector <span class="math">\(v\)</span> by scaling it by <span class="math">\(\lambda\)</span>.</p>
+</li>
+<li>
+<p>If <span class="math">\(A\)</span> is a bilinear form, a right eigenvector <span class="math">\(v\)</span> of <span class="math">\(A\)</span> is a vector that has the property that for all <span class="math">\(u\)</span>, <span class="math">\(u^T A v = u^T \lambda v = \lambda (u \cdot v)\)</span>. A left eigenvector is the same thing but for the left argument. This property sounds like just a roundabout way to say <span class="math">\(Av = \lambda v\)</span> but it makes nice things happen if you have an orthonormal basis of&nbsp;eigenvectors.</p>
+</li>
+</ul>
+<p>Diagonal:</p>
+<ul>
+<li>
+<p>A linear map whose matrix is a diagonal matrix is one that acts on each coordinate&nbsp;independently.</p>
+</li>
+<li>
+<p>A bilinear form whose matrix is diagonal is one that acts on each coordinate of the two vectors independently; it has no &#8220;cross&nbsp;terms&#8221;.</p>
+</li>
+</ul>
+<p>All of this except for diagonality is coordinate free, so it works the same if you change to a different basis. Some of it depends on the dot product, so it only makes sense if it makes sense to take a dot product. I think it&#8217;s worth noticing when you do something that depends on your choice of coordinates, or your choice of units (which affects the dot product), because it determines whether you can make these choices arbitrarily or if they matter.<sup id="fnref:pca"><a class="footnote-ref" href="#fn:pca">3</a></sup></p>
+<h2>Bonus: quantum states and&nbsp;observables</h2>
+<p>(Disclaimer: I&#8217;m not a physicist and I don&#8217;t really know what I&#8217;m talking&nbsp;about)</p>
+<p>In quantum mechanics, an observable is represented by a linear operator <span class="math">\(A\)</span> that acts on the quantum state <span class="math">\(\psi\)</span>. The idea is that you write <span class="math">\(\psi\)</span> as a linear combination of eigenstates of <span class="math">\(A\)</span>, and in each eigenstate the value of <span class="math">\(A\)</span> is given by the corresponding eigenvalue, and when you observe <span class="math">\(A\)</span> the state collapses to one of the&nbsp;eigenstates.</p>
+<p>It always seemed a bit weird to me that the result of the linear operator <span class="math">\(A\)</span> doesn&#8217;t have a physical meaning and is hardly ever talked about, as if the operator exists only to be a bag of&nbsp;eigenstates.</p>
+<p>However, the expectation value of <span class="math">\(A\)</span> in the state <span class="math">\(\psi\)</span> is <span class="math">\(\langle \psi | A | \psi \rangle\)</span> (which is basically <span class="math">\(\psi^T A \psi\)</span> in physicists&#8217; notation). So, maybe another way to think of a quantum observable is as a bilinear form, which when applied to a quantum state gives its expected&nbsp;value?</p>
+<p>Also, the density matrix corresponding to <span class="math">\(\psi\)</span> is <span class="math">\(| \psi \rangle \langle \psi |\)</span>, which is just the outer product of <span class="math">\(\psi\)</span> with itself. As we&#8217;ve seen, this is enough information to determine the expected value of any observable <span class="math">\(A\)</span>. And it makes sense that you can take linear combinations of these to get mixed states, and the expected values of observables factor through to their expected values in the pure&nbsp;states.</p>
+<p>But this story only accounts for expected values, and a quantum state is supposed to determine all the probabilities of each result. So it seems like eigenstates still have to have special meaning physically. I&#8217;m still confused about&nbsp;this.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:psd">
+<p>Technically this also depends on the fact that covariance matrices are positive definite, which is basically a condition that the &#8220;product&#8221; of any vector with itself is not negative.&#160;<a class="footnote-backref" href="#fnref:psd" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:covar-basis-independent">
+<p>I like this because it shows that the covariance matrix represents an object that is coordinate-independent; it doesn&#8217;t just tell you the covariance between <span class="math">\(x_i\)</span> and <span class="math">\(x_j\)</span>, which you can get by reading off the entries, but also the covariance between linear functions of <span class="math">\(x\)</span> that are not coordinate-aligned.&#160;<a class="footnote-backref" href="#fnref:covar-basis-independent" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:pca">
+<p>An example that comes to mind is <a href="https://en.wikipedia.org/wiki/Principal_component_analysis"><span class="caps">PCA</span></a>. <span class="caps">PCA</span> cares about the Euclidean distances between the points, so it only makes sense when it would make to take dot products. In particular this means that if you scale some of your variables, the result of <span class="caps">PCA</span> will be different!&#160;<a class="footnote-backref" href="#fnref:pca" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2018-04-08T00:00:00-04:00">
+      April 2018
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

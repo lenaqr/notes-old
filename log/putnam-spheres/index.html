@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Putnam&nbsp;spheres | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/log/putnam-spheres/" rel="bookmark"
+         title="Permalink to Putnam spheres">Putnam&nbsp;spheres</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p><a href="https://www.maa.org/math-competitions/putnam-competition">Putnam</a> 2019 A4 asks if there exists a function f(x, y, z) from <span class="math">\(\mathbf{R}^3\)</span> to <span class="math">\(\mathbf{R}\)</span>, that integrates to zero over the surface of every unit sphere, but is not identically&nbsp;zero.</p>
+<p>My coworkers were discussing this problem and its generalization: what about in <span class="math">\(\mathbf{R}^n\)</span>?</p>
+
+
+<p>We think that the answer is yes for all n, and that it&#8217;s enough for f to be an axis-aligned plane wave, that is f(x, y, z, &#8230;) = cos(kx) for some frequency&nbsp;k.</p>
+<p>Surprisingly (to my intuition), all we need to do is find k such that cos(kx) integrates to zero over the unit sphere <em>centered at zero</em>. If it does, then it integrates to zero over <em>any</em> unit&nbsp;sphere.</p>
+<p>This is essentially because you can get any shifted copy of cos(kx) using a <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine">linear combination</a> of cos(kx) and sin(kx), and we know that sin(kx) integrates to zero over the unit sphere centered at zero because sin is an <a href="https://en.wikipedia.org/wiki/Even_and_odd_functions">even function</a>.</p>
+<p>So does k always exist? It seems like it should, because things are continuous as a function of k. For the particular case of n = 3, k comes out particularly clean because of a <a href="https://www.scottaaronson.com/blog/?p=4432">coincidence in 3 dimensions</a>.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2020-01-12T00:00:00-05:00">
+      January 2020
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

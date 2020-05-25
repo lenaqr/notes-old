@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Eigenvectors from&nbsp;eigenvalues | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/log/eigenvectors-from-eigenvalues/" rel="bookmark"
+         title="Permalink to Eigenvectors from eigenvalues">Eigenvectors from&nbsp;eigenvalues</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p><span class="dquo">&#8220;</span>Eigenvectors from eigenvalues&#8221; (<a href="https://www.quantamagazine.org/neutrinos-lead-to-unexpected-discovery-in-basic-math-20191113/">Quanta article</a>, <a href="https://terrytao.wordpress.com/2019/08/13/eigenvectors-from-eigenvalues/">Terry Tao blog post</a>) is a recent result showing an unexpected relationship in basic linear&nbsp;algebra.</p>
+<p>I was trying to develop some intuition for this result and I initially found the proofs hard to read and understand, but after some studying I think I get it. I&#8217;ve written a quick explanation below; I think this would be much improved with pictures, but I don&#8217;t want to figure that out right now. Maybe another&nbsp;time.</p>
+<p>Suppose <span class="math">\(A\)</span> is a covariance matrix. Let <span class="math">\(\lambda\)</span> be the largest eigenvalue of <span class="math">\(A\)</span>, with eigenvector <span class="math">\(v\)</span>. We know <span class="math">\(\lambda\)</span> and we&#8217;d like to learn about <span class="math">\(v\)</span>.</p>
+<p>Consider <span class="math">\(\lambda I - A\)</span> as a covariance matrix. Its variance in each direction is <span class="math">\(\lambda\)</span> minus the variance that <span class="math">\(A\)</span> has in that direction. In particular, it has zero variance in the <span class="math">\(v\)</span> direction. If you imagine samples from a Gaussian distribution with covariance <span class="math">\(\lambda I - A\)</span>, it&#8217;ll be a point cloud shaped like a flat ellipse that is perpendicular to <span class="math">\(v\)</span>.</p>
+<p>Now if we look at this flat ellipse from the <span class="math">\(j\)</span>-th coordinate direction, how big is its &#8220;silhouette&#8221;? That is, what is the area of the projection of the ellipse onto the <span class="math">\(j\)</span>-th coordinate&nbsp;plane?</p>
+<p>If the <span class="math">\(j\)</span>-th axis is parallel to <span class="math">\(v\)</span>, then it&#8217;s like looking at a pancake head-on: the area of the projection is the area of the whole ellipse. But if the <span class="math">\(j\)</span>-th axis is perpendicular to <span class="math">\(v\)</span>, then it&#8217;s like looking at a pancake sideways: the area of the projection is&nbsp;zero.</p>
+<p>In general we have a linear combination of these two cases, so we can figure out the component of <span class="math">\(v\)</span> that is along the <span class="math">\(j\)</span>-th axis by taking the ratio of the projection&#8217;s area to the ellipse&#8217;s area. And that&#8217;s effectively what the eigenvectors-from-eigenvalues formula&nbsp;does.</p>
+<p>(This geometric interpretation only works with the largest eigenvalue, because variances and areas have to be positive, but the math works out&nbsp;regardless.)</p>
+<p>What&#8217;s notable to me is how helpful it was to my intuition to think of <span class="math">\(A\)</span> as a covariance matrix, rather than as a linear transformation, which is the more usual role of matrices in linear algebra. I think this applies to many uses of matrix math I see. More on this later,&nbsp;maybe?</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2020-01-06T00:00:00-05:00">
+      January 2020
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

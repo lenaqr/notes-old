@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Entropy Is&nbsp;Relative | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/articles/entropy-is-relative/" rel="bookmark"
+         title="Permalink to Entropy Is Relative">Entropy Is&nbsp;Relative</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>The entropy of a random quantity <span class="math">\(X\)</span> is the &#8220;amount of uncertainty&#8221; or &#8220;information content&#8221; in <span class="math">\(X\)</span>. It is defined&nbsp;as:</p>
+<div class="math">$$ H(X) = -E[ \log P(X) ] $$</div>
+<p>It&#8217;s the number of bits you need to specify the value of <span class="math">\(X\)</span> if you know its distribution, or equivalently, the number of random bits you need to generate <span class="math">\(X\)</span>.</p>
+<p>This makes sense for discrete-valued <span class="math">\(X\)</span>, like coin flips and letters in English text. But what about continuous distributions? What is the entropy of a normal&nbsp;distribution?</p>
+<p>This post is to try to make sense of&nbsp;this.</p>
+<h2>Infinity?</h2>
+<p>If you think about it, the entropy of a continuous distribution ought to be infinite. After all, a draw from a normal distribution is a real number which has an infinite number of digits to&nbsp;describe.</p>
+<p>But this isn&#8217;t very useful. Somehow a normal distribution with variance 1 seems less uncertain than a normal distribution with variance 2, and we&#8217;d like to capture&nbsp;that.</p>
+<h2>Differential&nbsp;entropy</h2>
+<p>A first idea is to just reuse the same definition, but with probability density instead of&nbsp;mass:</p>
+<div class="math">$$ h(X) = -E[ \log p(X) ] $$</div>
+<p>But this is kind of fishy. Probability density can be greater than 1, so <span class="math">\(h(X)\)</span> can go negative. Also, the density has units of <span class="math">\(1/dx\)</span>, but we&#8217;re taking the log of it? It turns out that we&#8217;ve actually defined the <a href="https://en.wikipedia.org/wiki/Differential_entropy">differential entropy</a>, which sort of looks like entropy but doesn&#8217;t have all the nice&nbsp;properties.</p>
+<h2>Relative&nbsp;entropy</h2>
+<p>Better is the idea of relative entropy (also <a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence"><span class="caps">KL</span> divergence</a>). If we have a reference distribution with density <span class="math">\(q\)</span>, then the relative entropy with respect to <span class="math">\(q\)</span> is <sup id="fnref:nonstandard"><a class="footnote-ref" href="#fn:nonstandard">1</a></sup></p>
+<div class="math">$$ H_q(X) = -E[ \log \frac{p(X)}{q(X)} ] $$</div>
+<p>The thing in the log is a ratio of densities, so at least the units check out. And if you let <span class="math">\(q\)</span> be a general measure rather than a distribution, it subsumes both discrete entropy and differential entropy as special cases (when <span class="math">\(q\)</span> is the counting measure or the Lebesgue measure,&nbsp;respectively).</p>
+<p>But what does it mean? It&#8217;s sometimes described as &#8220;the difference between the number of bits to encode <span class="math">\(X\)</span> using a code optimized for <span class="math">\(q\)</span> and a code optimized for <span class="math">\(p\)</span>,&#8221; but that never made as much sense to me as regular&nbsp;entropy.</p>
+<h2>The&nbsp;connection</h2>
+<p>To that end, I found it helpful to think back to regular entropy, interpreting it as the number of random bits you need to sample from the distribution of <span class="math">\(X\)</span>.</p>
+<p>How many bits do you need to sample from a continuous distribution? In some sense the answer is still infinity, but no one was going to use infinity digits of the answer anyway. Instead we can ask how many bits are needed to generate <span class="math">\(X\)</span> up to <span class="math">\(n\)</span> digits of&nbsp;precision.</p>
+<p>For now let&#8217;s imagine <span class="math">\(X\)</span> takes on values from <span class="math">\([0, 1)\)</span>, so we can easily represent it as a sequence of binary digits. Then the first <span class="math">\(n\)</span> digits is just a binary string, so it has a well defined&nbsp;entropy.</p>
+<p>In general this will depend on <span class="math">\(n\)</span>. But if <span class="math">\(X\)</span> has a continuous density, after some point all the remaining digits will be effectively uniform, so each additional digit will require an additional random bit. In the limit of large <span class="math">\(n\)</span>, the number of bits we need will approach <span class="math">\(h(X) + n\)</span>.</p>
+<p>Restating this a bit, we can say that the differential entropy is the number of bits you need to determine <span class="math">\(X\)</span> to within an interval of length <span class="math">\(2^{-n}\)</span>, minus <span class="math">\(n\)</span> which is the number of bits you would need to specify that interval naively.&nbsp;Cool.</p>
+<p>But notice that we&#8217;re implicitly using Lebesgue measure here when we talk about interval length and digits of precision. So we can generalize this to relative entropy with respect to any reference measure <span class="math">\(q\)</span>: it&#8217;s the number of bits you need to determine the result to within a set of measure <span class="math">\(2^{-n}\)</span>, as measured by <span class="math">\(q\)</span>.</p>
+<p>And now we see that we get regular entropy back when <span class="math">\(q\)</span> is the counting measure! If we determine <span class="math">\(X\)</span> to within a set of counting measure 1, then we&#8217;ve determined <span class="math">\(X\)</span>.</p>
+<h2>Maximum entropy is&nbsp;relative</h2>
+<p>The maximum entropy distribution is the uniform distribution, because it represents the least state of knowledge about <span class="math">\(X\)</span>, the state of maximum ignorance. Or is&nbsp;it?</p>
+<p>It turns out that the distribution which maximizes relative entropy with respect to <span class="math">\(q\)</span> is the one where <span class="math">\(p(x)\)</span> is proportional to <span class="math">\(q(x)\)</span>.<sup id="fnref:proportional"><a class="footnote-ref" href="#fn:proportional">2</a></sup> So the uniform distribution is max entropy only because we&#8217;re using a uniform reference&nbsp;measure.</p>
+<p>This also solves a puzzle of how max entropy works with change of variables. Example: Suppose you have a coin that lands heads with probability <span class="math">\(p\)</span>, and you want a prior on <span class="math">\(p\)</span>. You have no idea, so you assign it the uniform distribution over <span class="math">\([0, 1]\)</span>, because it&#8217;s the maximum entropy distribution. But what if you instead wanted a prior on <span class="math">\(\theta = \log p\)</span> instead? You don&#8217;t know anything about <span class="math">\(\theta\)</span> either, so you ought to assign a maximum entropy uniform distribution over <span class="math">\((-\infty, 0]\)</span>. But that isn&#8217;t the same as making <span class="math">\(p\)</span> uniform, so what&nbsp;gives?</p>
+<p>The answer is that you have to fix a reference measure, which can be either uniform in linear space or log space but not both. Maximum entropy can&#8217;t help you&nbsp;decide.</p>
+<p>Even in the discrete case, there&#8217;s a version of this reference measure problem when it&#8217;s not clear how to define the set of possible values. The uniform categorical distribution depends on what the categories are, and categories are made by&nbsp;people.</p>
+<h2>A word on thermodynamic&nbsp;entropy</h2>
+<p>Thermodynamic entropy sure doesn&#8217;t seem relative. It&#8217;s measured in units like joules per kelvin and it seems to have real physical consequences, like the fact that you can&#8217;t un-fry an egg. But thermodynamical entropy is supposed to be related to information entropy; can we fit it into the above&nbsp;picture?</p>
+<p>As far as I can tell, everything in statistical mechanics depends on the assumption (axiom?) that all microstates of an <a href="https://ocw.mit.edu/courses/physics/8-044-statistical-physics-i-spring-2013/readings-notes-slides/MIT8_044S13_mcrocanoncl.pdf">isolated system in equilibrium</a> are equally probable. That&#8217;s a reference&nbsp;measure!</p>
+<p>So I think you could say the second law of thermodynamics is really about the <em>relative</em> entropy of the universe, with respect to its ultimate stationary&nbsp;distribution.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:nonstandard">
+<p>This definition is non-standard; relative entropy is usually defined as the negative of the above and spelled <span class="math">\(D(p \Vert q)\)</span> or <span class="math">\(KL(p \Vert q)\)</span>. I defined it this way to make it more similar to the definition of entropy.&#160;<a class="footnote-backref" href="#fnref:nonstandard" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:proportional">
+<p>More technically, <span class="math">\(p\)</span> has a uniform density with respect to the measure <span class="math">\(q\)</span>.&#160;<a class="footnote-backref" href="#fnref:proportional" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2018-02-27T00:00:00-05:00">
+      February 2018
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

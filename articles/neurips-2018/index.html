@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>NeurIPS 2018&nbsp;stuff | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/articles/neurips-2018/" rel="bookmark"
+         title="Permalink to NeurIPS 2018 stuff">NeurIPS 2018&nbsp;stuff</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <h2>Pre-notes</h2>
+<p>Looking through the schedule, here are some things that I thought looked
+interesting. It&#8217;s definitely not a comprehensive list, nor related to what a
+typical <span class="caps">ML</span> researcher might consider notable, also I don&#8217;t really know what I&#8217;m
+talking about so take my editorial descriptions with a grain of&nbsp;salt.</p>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11968">Glow: Generative Flow with Invertible 1x1 Convolutions</a> (Tue 10:45&nbsp;poster)</p>
+<ul>
+<li>A generative model, comparable to VAEs and GANs. Gains some computational advantages by using invertible layers. <a href="https://blog.openai.com/glow/">OpenAI blog&nbsp;post</a></li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12596">Neural ODEs</a> (Tue 15:50 Track&nbsp;2)</p>
+<ul>
+<li>Replace a discrete stack of layers with continuous dynamics. David Duvenaud and&nbsp;students</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11960">Bayesian Nonparametric Spectral Estimation</a> (Tue 16:55 Track&nbsp;1)</p>
+<ul>
+<li>Fourier analysis through the lens of Gaussian&nbsp;processes.</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12639">Sequential Attend, Infer, Repeat</a> (Wed 10:25 Track&nbsp;2)</p>
+<ul>
+<li>Generative model for scene understanding, based on&nbsp;VAEs?</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11441">Importance Weighting and Variational Inference</a> (Wed 10:45&nbsp;poster)</p>
+<ul>
+<li>On some recent importance-weighted <span class="caps">VAE</span> work and repurposing it for probabilistic inference&nbsp;only.</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11975"><span class="caps">PCA</span> of high dimensional random walks</a> (Wed 10:45&nbsp;poster)</p>
+<ul>
+<li><span class="caps">PCA</span> has been proposed as a way to visualize deep net training trajectories. What if you apply it to a random&nbsp;walk?</li>
+</ul>
+<p><a href="http://papers.nips.cc/paper/7987-simple-distributed-and-accelerated-probabilistic-programming">Simple, Distributed, and Accelerated Probabilistic Programming</a> (Wed 10:45&nbsp;poster)</p>
+<ul>
+<li>On Edward2, a new probabilistic programming package that works with Tensorflow. My former colleague Alexey Radul&#8217;s name is on it. Google&nbsp;(Brain)</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12013">Autoconj: Recognizing and Exploiting Conjugacy Without a <span class="caps">DSL</span></a> (Thu 10:45&nbsp;poster)</p>
+<ul>
+<li>Automatically optimize parts of a probabilistic program embedded in Python. Also from Google <span class="caps">AI</span>/Brain</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11606">Tangent: Automatic differentation using source-code transformation for dynamically typed array programming</a> (Wed 10:45&nbsp;poster)</p>
+<p><a href="http://papers.nips.cc/paper/8221-backpropagation-with-callbacks-foundations-for-efficient-and-expressive-differentiable-programming">Backpropagation with Callbacks</a> (Wed 17:00&nbsp;poster)</p>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=11836">Automatic Differentiation in <span class="caps">ML</span>: Where we are and where we should be going</a> (Thu 10:40 Track&nbsp;1)</p>
+<ul>
+<li>A bunch of work on automatic differentiation. One of them does source code transformation on&nbsp;Python!</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12706">Human-in-the-Loop Interpretability Prior</a> (Thu 10:25 Track&nbsp;1)</p>
+<ul>
+<li>What makes an model interpretable? Ask <span class="caps">ML</span>&nbsp;researchers.</li>
+</ul>
+<p><a href="http://papers.nips.cc/paper/7862-slang-fast-structured-covariance-approximations-for-bayesian-deep-learning-with-natural-gradient"><span class="caps">SLANG</span>: Fast Structured Covariance Approximation for Bayesian Deep Learning with Natural Gradient</a> (Thu 10:45&nbsp;poster)</p>
+<p><a href="http://papers.nips.cc/paper/7949-bruno-a-deep-recurrent-model-for-exchangeable-data"><span class="caps">BRUNO</span>: A Deep Recurrent Model for Exchangeable Data</a> (Thu 10:45&nbsp;poster)</p>
+<ul>
+<li>Bayesian deep learning&nbsp;models.</li>
+</ul>
+<p><a href="http://papers.nips.cc/paper/7780-hyperbolic-neural-networks.pdf">Hyperbolic Neural Networks</a> (Thu 15:30 Track&nbsp;2)</p>
+<ul>
+<li>A theory for neural networks that work in hyperbolic geometry, which is &#8220;bigger&#8221; than Euclidean space even in many&nbsp;dimensions.</li>
+</ul>
+<p><a href="https://nips.cc/Conferences/2018/Schedule?showEvent=12742">Sample-Efficient Reinforcement Learning with Stochastic Ensemble Value Expansion</a> (Thu 15:50 Track&nbsp;1)</p>
+<ul>
+<li>A model-based <span class="caps">RL</span> approach that can learn from much fewer samples, but also performs well asymptotically by falling back to model-free <span class="caps">RL</span>.</li>
+</ul>
+<p><a href="http://papers.nips.cc/paper/7725-deep-reinforcement-learning-in-a-handful-of-trials-using-probabilistic-dynamics-models">Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models</a> (Thu 16:20 Track&nbsp;1)</p>
+<ul>
+<li>Another model-based <span class="caps">RL</span> approach. From Sergey Levine and students at <span class="caps">UC</span> Berkeley <span class="caps">AI</span>&nbsp;Lab.</li>
+</ul>
+<h2>Tutorials</h2>
+<p>David Dunson gave a <a href="https://nips.cc/Conferences/2018/Schedule?showEvent=10984">tutorial on Scalable Bayesian Inference</a>.</p>
+<p>He focused on <span class="caps">MCMC</span>, because in his opinion variational methods do a bad job of
+quantifying uncertainty and you have no idea how accurate the approximation is.
+This seems a bit unfair to me, because when I&#8217;ve used <span class="caps">MCMC</span> I also had no idea
+how accurate the approximation was. He did have some slides that gestured at
+theory behind his methods, so maybe there&#8217;s something there? What do I&nbsp;know.</p>
+<p>Anyway, I agree with the sentiment that if you go to the trouble of doing
+Bayesian inference to get an uncertainty estimate, you should do a good job of
+it. But he spent most of the time discussing a handful of methods from his
+group, skipped over some of them to save time, and the ones he did present felt
+like hacks since he breezed over the theory. Overall, I left the talk feeling&nbsp;disappointed.</p>
+<p>Susan Athey presented on <a href="https://nips.cc/Conferences/2018/Schedule?showEvent=10982">Counterfactual Inference</a>.</p>
+<p>To be honest, I didn&#8217;t pay that much attention during this tutorial and it
+wasn&#8217;t her fault. In broad strokes I would agree that a lot of important
+problems are counterfactual inference problems. But outside of textbook
+examples, I feel like I don&#8217;t have any problems that I know how to formulate
+as conterfactual inference&nbsp;problems.</p>
+<p>It&#8217;s a topic I definitely want to look into more&nbsp;later.</p>
+<h2>Tuesday&nbsp;sessions</h2>
+<p>I didn&#8217;t know beforehand that most of the talks at NeurIPS were 5-minute poster
+spotlights. In the first session I planned to hop tracks to catch some specific
+talks; I quickly realized that this was useless, since 5-minute talks have no
+content. Browsing the posters themselves was comparatively way more&nbsp;useful.</p>
+<p>I met Durk Kingma, who was presenting the Glow poster. I learned the&nbsp;following:</p>
+<ul>
+<li>Their work is based on a previous invertible architecture called Real <span class="caps">NVP</span>. The
+  architecture is nearly the same but they&#8217;ve made some small&nbsp;refinements.</li>
+<li>It sounds like most of the performance gain relative to the previous paper
+  comes from training a bigger and better model using more&nbsp;computers.</li>
+<li>I asked why this model generates good-quality images, compared to VAEs which
+  (I thought) generate blurry images. Kingma said he thinks a <span class="caps">VAE</span> could generate
+  similarly good images if a similar amount of work was put into&nbsp;it.</li>
+<li>However, VAEs still achieve better&nbsp;likelihood.</li>
+<li>More reading on invertible model architectures: <a href="https://hci.iwr.uni-heidelberg.de/vislearn/inverse-problems-invertible-neural-networks/">Analyzing Inverse Problems
+with Invertible Neural&nbsp;Networks</a></li>
+</ul>
+<p>I missed the talk on Neural ODEs, unfortunately. I&#8217;ve heard it was a high
+quality paper, so I&#8217;ll check it&nbsp;out.</p>
+<h2>Wednesday&nbsp;sessions</h2>
+<p>Joelle Pineau gave an invited talk on reproducibility in reinforcement learning.
+Two main&nbsp;takeaways:</p>
+<ul>
+<li>Reinforcment learning algorithms can perform differently due to different
+  implementations, different hyperparameters, even different random seeds. We
+  need to do more careful about fair comparisons to reach robust&nbsp;conclusions.</li>
+<li>Standard benchmark environments are easy to memorize. We need more diverse,
+  realistic environments that test generalizability of&nbsp;results.</li>
+</ul>
+<p>At posters, I had some good discussion with one of the authors of the <span class="caps">IWVI</span>
+paper. I was a little concerned that it optimizes an upper bound on the <span class="caps">KL</span>
+divergence, so it might waste effort minimizing the looseness of the bound
+instead of the thing you care about. But the empirical results do look pretty&nbsp;good.</p>
+<p>I checked out the Edward2 poster. It sounds like the most exciting things about
+it are that it supports stuff like distributing a large model across multiple
+TPUs, and it&#8217;s lower-level than alternatives like Pyro and therefore flexible
+enough to support research into experimental model architectures. Having now
+read the Edward2 paper and compared it to the <a href="http://pyro.ai/examples/effect_handlers.html">documentation of Pyro&#8217;s internal
+APIs</a>, my impression is that these two actually seem extremely similar.
+I&#8217;d like to try them both and compare sometime, when I get back into
+probabilistic&nbsp;programming.</p>
+<p>I visited the Tangent poster and found out about a more recent Google
+project in the same space, <a href="https://github.com/google/jax">jax</a>. It uses program tracing for autodiff
+combined with <span class="caps">JIT</span>-compiling code to GPUs and TPUs for high&nbsp;performance.</p>
+<p>I didn&#8217;t actually see the poster on &#8220;Backpropagation with Callbacks&#8221;, but my
+coworker pointed it out later. It&#8217;s a way to implement automatic differentation
+very simply and cleanly using functional programming. Might be worth studying,
+although I&#8217;m not so interested in building an <span class="caps">AD</span> system from scratch that
+doesn&#8217;t come with a big library of array functions and <span class="caps">GPU</span> support and&nbsp;stuff.</p>
+<h2>Thursday&nbsp;sessions</h2>
+<p>A few cool talks and posters&nbsp;today. </p>
+<p>In the morning I engaged with the <span class="caps">SLANG</span> poster. They use a low rank + diagonal
+approximation to a covariance matrix (in this case, the covariance of a
+variational posterior over model parameters). The low rank part is computed with
+an eigendecomposition on each iteration and then the diagonal is corrected. I&#8217;ve
+thought about how to compute a low rank approximation of a covariance matrix
+before, but I hadn&#8217;t thought about the fact that it&#8217;s also computationally easy
+to maintain the exact diagonal as a correction to the&nbsp;approximation.</p>
+<p>In fact there&#8217;s another natural gradient descent paper that uses this idea that
+maintaining a diagonal correction is cheap: <a href="http://papers.nips.cc/paper/8164-fast-approximate-natural-gradient-descent-in-a-kronecker-factored-eigenbasis">Fast Approximate Natural Gradient
+in a Kronecker-Factored&nbsp;Eigenbasis</a></p>
+<p>In the afternoon I saw the two talks about model-based reinforcement learning
+approaches, <span class="caps">STEVE</span> and <span class="caps">PETS</span>. Listening to the talks, they seemed extremely
+similar to me: both emphasized quantifying uncertainty in the dynamics models,
+and both emphasized how they could learn using few samples compared to
+model-free methods. I probably could tell the difference if I were in the field
+and could unpack what the jargon in the names meant, but instead I visited the
+posters and found&nbsp;out:</p>
+<ul>
+<li>
+<p><span class="caps">STEVE</span> is based on Q learning. The model is used to roll out several time steps
+  to obtain a more accurate estimate of the action-value function. It uses the
+  uncertainty in the model to decide how far to roll out. If the model is too
+  uncertain, it will fall back to one step which is the same as Q&nbsp;learning.</p>
+</li>
+<li>
+<p><span class="caps">PETS</span> uses the dynamics model directly to plan its next sequence of actions by
+  sampling trajectories. The model is the only thing that is learned, no policy
+  or value function; however it does more work at inference&nbsp;time.</p>
+</li>
+</ul>
+<h2>Workshops</h2>
+<p>Frank Wood spoke about probabilistic programming. He&#8217;s interested in
+probabilistic models as <em>programs</em> with interesting dependency structure, and
+<a href="http://papers.nips.cc/paper/7570-faithful-inversion-of-generative-models-for-effective-amortized-inference">inference algorithms that take advantage of that structure</a>.</p>
+<p>One thing I found interesting is that he gave a plug for the <a href="https://arxiv.org/abs/1805.10469">wake sleep
+algorithm</a> for learning an inference model, to be contrasted with the
+variational Bayes methods that have been more popular recently. I haven&#8217;t really
+seen this before, but it reminded me of a <a href="https://papers.nips.cc/paper/6353-neurally-guided-procedural-models-amortized-inference-for-procedural-graphics-programs-using-neural-networks.pdf">paper on neurally-guided procedural
+generation</a> I saw Noah Goodman talk about where they used perhaps a
+similar&nbsp;technique.</p>
+<p>There was another talk on model-based reinforcement learning using Bayesian
+neural networks. One issue is that if you use the learned model as an input to a
+planning algorithm that uses gradients, the planner will find adversarial
+examples in the model.&nbsp;Oops!</p>
+<p>One of my big takeaways from the Bayesian deep learning workshop is that
+Bayesian models and other existing methods of uncertainty quantification seem to
+do a bad job of predicting &#8220;out-of-distribution&#8221; inputs. They&#8217;ll assign high
+uncertainty in areas near decision boundaries, but they won&#8217;t necessarily assign
+high uncertainty for random inputs that are way outside the training&nbsp;distribution.</p>
+<p>A particular manifestation of this: <a href="http://bayesiandeeplearning.org/2018/papers/67.pdf">Do Deep Generative Models Know What They
+Don&#8217;t Know?</a> This paper finds that a generative flow-based model trained on
+the <span class="caps">CIFAR</span>-10 dataset assigns higher probability to examples from the <span class="caps">SVHN</span>
+dataset than the ones from the training set. It seems these models are not
+exactly doing what we think or would like that they&nbsp;are.</p>
+<h2>Misc</h2>
+<p>In the above I&#8217;ve focused on content, rather than on my experience of attending
+the&nbsp;conference.</p>
+<p>I think that at some point I developed an overly rosy expectation of how
+intellectually valuable it would be to attend a large academic conference like
+NeurIPS. Attending talks was less enlightening than I imagined; meeting specific
+scientists whose names I&#8217;d heard of was less exciting than I imagined. And I
+don&#8217;t know that it would be worth attending for the full week if I were to do it&nbsp;again.</p>
+<p>But adjusting for those expectations, I&#8217;m definitely glad I&nbsp;went.</p>
+<p>My favorite part of the program was the poster sessions. I liked to hear people
+talk about their work in a less scripted way, where they had more time to go
+over details and maybe the background ideas and concepts that they build upon,
+and it felt easier to ask questions and have some semblance of a&nbsp;conversation.</p>
+<p>I&#8217;m not going to talk here about my conversations with people at our recruiting
+booth or events, or with my former classmates and labmates and others I
+recognized or met for the first time &#8212; but those also felt&nbsp;valuable.</p>
+<p>Most of all it was an excuse to immerse myself in machine learning and <span class="caps">AI</span> and
+think about nothing else for a week. I definitely appreciated it for that alone.
+My head is spinning with ideas now and I hope I get around to following up on
+some of&nbsp;them.</p>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2018-12-04T00:00:00-05:00">
+      December 2018
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

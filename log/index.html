@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Log | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+ <section id="content">
+<h1>Log</h1>
+
+<ol id="post-list">
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/installing-ocaml-at-home/" rel="bookmark" title="Permalink to Installing OCaml at home">Installing OCaml at&nbsp;home</a></h2> </header>
+                <div class="entry-content">
+                    <p>I write OCaml code in my day job, where we’ve invested in a developer experience that works out of the box with the right tools, compilers, and editor plugins.</p>
+<p>To use OCaml at home, there’s a bit more setup. I mostly followed the instructions in <a href="https://dev.realworldocaml.org/install.html">Real World Ocaml</a>, but there were a couple places where it seemed out of date and I ended up doing something different, so I’ve written up what I did here.</p>
+
+                    <p><a href="//luanths.github.io/log/installing-ocaml-at-home/">Read more…</a></p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-02-13T00:00:00-05:00"> February 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/a-bayesian-approach-is-not-the-prior/" rel="bookmark" title="Permalink to A Bayesian approach is not the prior">A Bayesian approach is not the&nbsp;prior</a></h2> </header>
+                <div class="entry-content">
+                    <p>Andrew Gordon Wilson, <a href="https://cims.nyu.edu/~andrewgw/caseforbdl/">The Case for Bayesian Deep Learning</a>:</p>
+<blockquote>
+<p>The key distinguishing property of a Bayesian approach is marginalization instead of optimization, not the prior, or Bayes rule&nbsp;[&#8230;]</p>
+</blockquote>
+<p>This is a great point which <a href="/articles/not-priors/">I agree with</a>, and understanding this gave me greater respect for explicitly-Bayesian approaches, compared with those based on function optimization. Optimization can be very brittle, and Bayesian model averaging departs from it significantly in a way that is both theoretically appealing and may have practical&nbsp;promise.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-02-04T00:00:00-05:00"> February 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/continuous-time-discrete-space-mcmc/" rel="bookmark" title="Permalink to Continuous-time discrete-space MCMC">Continuous-time discrete-space <span class="caps">MCMC</span></a></h2> </header>
+                <div class="entry-content">
+                    <p>I came across this preprint which I found&nbsp;fascinating:</p>
+<ul>
+<li>Sam Power, Jacob Vorstrup Goldman (2019) <a href="https://arxiv.org/abs/1912.04681">Accelerated Sampling on Discrete Spaces with Non-Reversible Markov&nbsp;Processes</a></li>
+</ul>
+<p>The main new idea to me is that of <span class="caps">MCMC</span> sampling using a continuous-time Markov process, rather than a discrete-time Markov chain. <a href="https://arxiv.org/abs/1701.02434">Hamiltonian Monte Carlo</a> and other successful sampling algorithms already use continuous-time dynamics in continuous spaces, and this paper explores analogues of this for sampling discrete&nbsp;spaces.</p>
+<p>Working in continuous time makes the algorithm design clean in some ways: rather than rejecting state transitions to get the correct stationary distribution, one can choose how much time advances before the next transition. This effectively determines how much weight the current state gets in the final sample. I think this is similar to the difference between <a href="https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/lectures/lecture17.pdf">rejection sampling and importance sampling</a>. The authors also import useful ideas from continuous samplers, like adding momentum variables, to design more efficient&nbsp;samplers.</p>
+<p>The authors focus on spaces with a kind of algebraic structure, which plays the role of the vector structure of continuous space. I&#8217;m curious where else these ideas can be&nbsp;applied.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-01-27T00:00:00-05:00"> January 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/putnam-spheres/" rel="bookmark" title="Permalink to Putnam spheres">Putnam&nbsp;spheres</a></h2> </header>
+                <div class="entry-content">
+                    <p><a href="https://www.maa.org/math-competitions/putnam-competition">Putnam</a> 2019 A4 asks if there exists a function f(x, y, z) from <span class="math">\(\mathbf{R}^3\)</span> to <span class="math">\(\mathbf{R}\)</span>, that integrates to zero over the surface of every unit sphere, but is not identically zero.</p>
+<p>My coworkers were discussing this problem and its generalization: what about in <span class="math">\(\mathbf{R}^n\)</span>?</p>
+
+                    <p><a href="//luanths.github.io/log/putnam-spheres/">Read more…</a></p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-01-12T00:00:00-05:00"> January 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/eigenvectors-from-eigenvalues/" rel="bookmark" title="Permalink to Eigenvectors from eigenvalues">Eigenvectors from&nbsp;eigenvalues</a></h2> </header>
+                <div class="entry-content">
+                    <p><span class="dquo">&#8220;</span>Eigenvectors from eigenvalues&#8221; (<a href="https://www.quantamagazine.org/neutrinos-lead-to-unexpected-discovery-in-basic-math-20191113/">Quanta article</a>, <a href="https://terrytao.wordpress.com/2019/08/13/eigenvectors-from-eigenvalues/">Terry Tao blog post</a>) is a recent result showing an unexpected relationship in basic linear&nbsp;algebra.</p>
+<p>I was trying to develop some intuition for this result and I initially found the proofs hard to read and understand, but after some studying I think I get it. I&#8217;ve written a quick explanation below; I think this would be much improved with pictures, but I don&#8217;t want to figure that out right now. Maybe another&nbsp;time.</p>
+<p>Suppose <span class="math">\(A\)</span> is a covariance matrix. Let <span class="math">\(\lambda\)</span> be the largest eigenvalue of <span class="math">\(A\)</span>, with eigenvector <span class="math">\(v\)</span>. We know <span class="math">\(\lambda\)</span> and we&#8217;d like to learn about <span class="math">\(v\)</span>.</p>
+<p>Consider <span class="math">\(\lambda I - A\)</span> as a covariance matrix. Its variance in each direction is <span class="math">\(\lambda\)</span> minus the variance that <span class="math">\(A\)</span> has in that direction. In particular, it has zero variance in the <span class="math">\(v\)</span> direction. If you imagine samples from a Gaussian distribution with covariance <span class="math">\(\lambda I - A\)</span>, it&#8217;ll be a point cloud shaped like a flat ellipse that is perpendicular to <span class="math">\(v\)</span>.</p>
+<p>Now if we look at this flat ellipse from the <span class="math">\(j\)</span>-th coordinate direction, how big is its &#8220;silhouette&#8221;? That is, what is the area of the projection of the ellipse onto the <span class="math">\(j\)</span>-th coordinate&nbsp;plane?</p>
+<p>If the <span class="math">\(j\)</span>-th axis is parallel to <span class="math">\(v\)</span>, then it&#8217;s like looking at a pancake head-on: the area of the projection is the area of the whole ellipse. But if the <span class="math">\(j\)</span>-th axis is perpendicular to <span class="math">\(v\)</span>, then it&#8217;s like looking at a pancake sideways: the area of the projection is&nbsp;zero.</p>
+<p>In general we have a linear combination of these two cases, so we can figure out the component of <span class="math">\(v\)</span> that is along the <span class="math">\(j\)</span>-th axis by taking the ratio of the projection&#8217;s area to the ellipse&#8217;s area. And that&#8217;s effectively what the eigenvectors-from-eigenvalues formula&nbsp;does.</p>
+<p>(This geometric interpretation only works with the largest eigenvalue, because variances and areas have to be positive, but the math works out&nbsp;regardless.)</p>
+<p>What&#8217;s notable to me is how helpful it was to my intuition to think of <span class="math">\(A\)</span> as a covariance matrix, rather than as a linear transformation, which is the more usual role of matrices in linear algebra. I think this applies to many uses of matrix math I see. More on this later,&nbsp;maybe?</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-01-06T00:00:00-05:00"> January 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/reviving-this-log/" rel="bookmark" title="Permalink to Reviving this log">Reviving this&nbsp;log</a></h2> </header>
+                <div class="entry-content">
+                    <p>Let&#8217;s try this again. This entry brought to you by newly-set-up <a href="https://soundlake.net/posts/2018/04/02/the-exhaustive-guide-to-build-pelican-blog-with-github-and-travis-ci.html">Travis-<span class="caps">CI</span> automation</a>!</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2020-01-05T00:00:00-05:00"> January 2020 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/named-tensor-labeled-array/" rel="bookmark" title="Permalink to Named tensor, labeled array">Named tensor, labeled&nbsp;array</a></h2> </header>
+                <div class="entry-content">
+                    <p><a href="http://nlp.seas.harvard.edu/NamedTensor">NamedTensor</a> is a proposal from
+Harvard <span class="caps">NLP</span> researchers for enhancing tensors &#8212; multi-dimensional arrays which
+are the central object in many deep learning frameworks &#8212; with named
+dimensions. For anyone who&#8217;s written code to work with multi-dimensional arrays
+and had to deal with knowing which axis is which and making sure they line up, I
+think this sort of thing can help a lot with maintainability and&nbsp;usability.</p>
+<p>In fact many commenters on the NamedTensor post pointed out the similarity to
+<a href="http://xarray.pydata.org/en/stable/">xarray</a>, which is an existing library that
+brings labeled dimensions to numpy. I&#8217;ve been using xarray recently for some
+work projects and I&#8217;ve found that it lets me write research code that feels a
+lot cleaner and more robust compared to the axis twiddling I would&#8217;ve done in
+raw&nbsp;numpy.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2019-01-14T00:00:00-05:00"> January 2019 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/pyro-and-edward2-comparison-by-example/" rel="bookmark" title="Permalink to Pyro and Edward2 comparison by example">Pyro and Edward2 comparison by&nbsp;example</a></h2> </header>
+                <div class="entry-content">
+                    <p>To get a flavor of the probabilistic programming frameworks Pyro and Edward2, I
+decided to implement some examples in each of&nbsp;them.</p>
+<p>I&#8217;ve started with a small example cribbed from the Pyro docs. Notebooks:
+<a href="https://github.com/luanthe/notebooks/blob/master/2018-12-16%20pyro.ipynb">Pyro</a> <a href="https://github.com/luanthe/notebooks/blob/master/2018-12-16%20edward.ipynb">Edward2</a></p>
+<p>My first&nbsp;impressions:</p>
+<p>Pyro has a much more organized set of tutorials and examples that explain each
+of its features. Edward2 &#8212; and Tensorflow Probability in general of which it is
+a part &#8212; lacks anything comparable. There is a set of lengthier standalone
+examples showcasing various things you can do, but it&#8217;s hard to get a complete
+picture from them. Hopefully this will get better with&nbsp;time.</p>
+<p>Also, while Pyro does <span class="caps">SVI</span> out of the box, Edward2 doesn&#8217;t seem to have a built
+in variational inference op at all; you have to spell out the <span class="caps">ELBO</span> objective.
+This would make sense if Edward2 is in some sense complementary to existing
+frameworks, especially Edward 1. You could do vanilla <span class="caps">VI</span> in Edward, so Edward2
+is for everything&nbsp;else.</p>
+<p>Next I&#8217;d like to take one of the standalone examples in Edward2 and rewrite it
+in&nbsp;Pyro.</p>
+<p>Update: I obviously never got back to this, but <a href="https://colcarroll.github.io/ppl-api/">someone else did something
+similar</a> with many frameworks. It&#8217;s more aimed toward the common use
+patterns of each <span class="caps">API</span>, whereas I would&#8217;ve liked to do examples digging into some
+lower level details, but that&#8217;s a task for another&nbsp;day.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-12-16T00:00:00-05:00"> December 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/thinking-about-probabilistic-programming-again/" rel="bookmark" title="Permalink to Thinking about probabilistic programming again">Thinking about probabilistic programming&nbsp;again</a></h2> </header>
+                <div class="entry-content">
+                    <p>Between having just come back from NeurIPS and met some of my old labmates, and
+watching the <a href="https://www.youtube.com/playlist?list=PL_PW0E_Tf2qvXBEpl10Y39RULTN-ExzZQ">talks from <span class="caps">PROBPROG</span> 2018</a>, I&#8217;ve gotten into a
+probabilistic programming&nbsp;mood.</p>
+<p>In particular I&#8217;ve been thinking about the design of probabilistic programming
+frameworks, from the now trendy deep-learning-focused ones such as <a href="http://pyro.ai/">Pyro</a>
+and <a href="https://github.com/tensorflow/probability/tree/master/tensorflow_probability/python/edward2">Edward2</a>, to a new project from my former lab, <a href="https://github.com/probcomp/Gen">Gen</a>.</p>
+<p>Of course, my <a href="https://dspace.mit.edu/handle/1721.1/113160">M.Eng thesis</a> was on this topic. But looking back on it
+now, the proposal in my thesis seems <em>way too complicated</em>. (I think it&#8217;s
+partly to blame that I was anchored to the existing implementations of Venture
+in the lab, which had a lot of complicated cruft in&nbsp;them.)</p>
+<p>I want to revisit this and maybe eventually produce something that I can explain
+to other people, but for now here are some scattered thoughts
+(incomprehensibility&nbsp;warning):</p>
+<ul>
+<li>
+<p>In my thesis there was this whole section on traces with a monolithic
+  interface that they should satisfy. I like Gen&#8217;s approach better, where a
+  trace is basically a plain data structure whose interpretation depends on the
+  model&nbsp;program.</p>
+</li>
+<li>
+<p>In fact, I would go further. Probabilistically, there&#8217;s nothing special about
+  tracing; it&#8217;s just a program transformation that turns a probabilistic program
+  into a trace-valued random variable. This should simplify concepts a&nbsp;lot.</p>
+</li>
+<li>
+<p>I had this idea that stochastic procedures could have their own internal
+  mutable state, to keep track of something like sufficient statistics. In
+  hindsight it seems better for procedures to be stateless but allowed to mutate
+  their inputs. You can still have a stateful procedure by making a closure.
+  Note: mutation only works if a procedure knows how to run itself backward to
+  undo what it&nbsp;did.</p>
+</li>
+<li>
+<p>Another source of complexity was for handling probabilistic programs that
+  don&#8217;t have a joint density, such as programs that call out to an external
+  simulator. My current opinion is that this doesn&#8217;t seem worth cluttering up
+  the core interface for. You could work around this by, for example, tracing
+  the external program&#8217;s use of the random number generator and making a joint
+  density out of that. (This is basically the approach in <a href="https://arxiv.org/pdf/1807.07706.pdf">Frank Wood&#8217;s work
+  with the physics simulator <span class="caps">SHERPA</span></a>.)</p>
+</li>
+<li>
+<p>If the trace is just a data structure like in Gen, all the incremental graph
+  stuff in Venture just becomes a data diffing problem. That&#8217;s&nbsp;neat.</p>
+</li>
+</ul>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-12-15T00:00:00-05:00"> December 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/neurips/" rel="bookmark" title="Permalink to N(eur)IPS">N(eur)<span class="caps">IPS</span></a></h2> </header>
+                <div class="entry-content">
+                    <p>I&#8217;m at NeurIPS this week! It&#8217;s my first time going to an academic conference,
+and I&#8217;m excited. Although I&#8217;m mostly there to represent my employer, I&#8217;m also
+interested to meet people and learn about current&nbsp;research.</p>
+<p>I&#8217;ve started a <a href="/articles/neurips-2018/">page</a> where I might put some of my notes and&nbsp;thoughts.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-12-03T00:00:00-05:00"> December 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/trying-out-observable/" rel="bookmark" title="Permalink to Trying out Observable">Trying out&nbsp;Observable</a></h2> </header>
+                <div class="entry-content">
+                    <p><a href="https://beta.observablehq.com/">Observable</a> is a web app for making interactive notebooks. I&#8217;ve
+been interested in the idea since I heard of it, and recently I decided to try
+it out by porting <a href="https://github.com/luanthe/notebooks/blob/master/2018-06-28%20continued%20rational%20function%20approximations.ipynb">one of my Jupyter notebook posts</a> to&nbsp;Observable.</p>
+<p>First order of business was figuring out how to make a simple line plot. I&#8217;m not
+aware of a Javascript analogue of Python <code>matplotlib</code> that is widely used. I
+know there&#8217;s <a href="https://d3js.org/">D3</a>, but my impression is that D3 is more designed for
+building custom fancy interactive visualizations, and it seemed too big and
+complicated when basically all I want to do is <code>plot(x, y)</code>.</p>
+<p>Through looking at some Observable example notebooks I came across
+<a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, which seemed a bit simpler to use. It&#8217;s still fancier
+than <code>matplotlib</code>; my Python code for the first&nbsp;plot</p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>became a 15+ line <span class="caps">JSON</span> description of how to render the&nbsp;plot.</p>
+<p>I mean, okay, this is fine. Vega-Lite is (I think?) designed for web documents
+that are rendered over and over again, so it makes sense that it makes you
+specify plots using a more explicit, declarative style. And at least I can put
+most of the plot options into a function that I can reuse throughout a&nbsp;notebook.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-11-25T00:00:00-05:00"> November 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/emacs-on-a-chromebook/" rel="bookmark" title="Permalink to Emacs on a Chromebook">Emacs on a&nbsp;Chromebook</a></h2> </header>
+                <div class="entry-content">
+                    <p>This week I&#8217;m away from home and my main computer is a&nbsp;Chromebook.</p>
+<p>I think Chromebooks are great and cover most of what I&#8217;d want from a computer on
+the go, but sometimes Chrome <span class="caps">OS</span> is not enough: for instance, this week I wanted
+a Linux environment with Emacs/Python/Git so I could update <a href="https://github.com/luanthe/luanthe.github.io">this
+website</a> among other&nbsp;things.</p>
+<p>I&#8217;ve heard of <a href="https://github.com/dnschneid/crouton">crouton</a> as a way to install Linux on a Chromebook. In
+my case, I didn&#8217;t want to replace Chrome <span class="caps">OS</span> entirely. Instead, I set it up so
+that I have Emacs running in a window within Chrome <span class="caps">OS</span>. crouton can do this&nbsp;too!</p>
+<p>The setup was pretty easy to figure out from the examples in the crouton readme,
+but here&#8217;s exactly what I&nbsp;did:</p>
+<ol>
+<li>Enable developer&nbsp;mode</li>
+<li>Download <code>crouton</code></li>
+<li>Open a shell (Ctrl+Alt+T, <code>shell</code>)</li>
+<li>Run <code>sudo sh ~/Downloads/crouton -t xiwi</code></li>
+<li><code>sudo enter-chroot</code></li>
+<li><code>sudo apt-get install emacs git</code></li>
+<li>(Optional) Set up Emacs configuration. I use <a href="https://github.com/syl20bnr/spacemacs">Spacemacs</a>, so I
+   installed it with <code>git clone https://github.com/syl20bnr/spacemacs
+   ~/.emacs.d</code></li>
+<li><code>exit</code></li>
+<li>Open an emacs window by running <code>sudo startxiwi emacs</code> in the&nbsp;shell</li>
+</ol>
+<p>At work I&#8217;ve been moving toward <a href="https://ambrevar.xyz/emacs-eshell/">using Emacs everywhere</a>, so having
+Emacs be my main interface to the Linux side works pretty well for&nbsp;me.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-11-20T00:00:00-05:00"> November 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+        <li><article class="hentry">
+                <header> <h2 class="entry-title"><a href="//luanths.github.io/log/trying-a-new-thing/" rel="bookmark" title="Permalink to Trying a new thing">Trying a new&nbsp;thing</a></h2> </header>
+                <div class="entry-content">
+                    <p>What this log is and&nbsp;isn&#8217;t:</p>
+<p>It&#8217;s mostly for me, rather than for any particular audience. In fact, I expect zero people to follow&nbsp;it.</p>
+<p>It might be useful as a record of the kinds of stuff I think&nbsp;about.</p>
+<p>I want to stay away from long-form writing or any standard of quality or polish. I can never keep that up. Entries should be written in one sitting, no&nbsp;drafts.</p>
+<p>I guess it&#8217;s like a linkblog/microblog. But not focused on current events or my personal&nbsp;life.</p>
+                </div><!-- /.entry-content -->
+                <footer class="post-info">
+                    <time class="published" datetime="2018-11-18T00:00:00-05:00"> November 2018 </time>
+                </footer><!-- /.post-info -->
+        </article></li>
+</ol><!-- /#posts-list -->
+</section><!-- /#content -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>

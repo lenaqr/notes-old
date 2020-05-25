@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Regularizers Are Not&nbsp;Priors | Anthony Lu</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//luanths.github.io/theme/base.css" />
+    <link href="//luanths.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Anthony Lu Full Atom Feed" />
+
+
+
+
+
+  </head>
+  <body>
+    <header id="header">
+      <nav id="navigation">
+        <a href="/about/">About</a>
+        <a href="/log/">Log</a>
+      </nav>
+    </header>
+
+    <section id="content">
+  <header>
+    <h1 class="entry-title">
+      <a href="//luanths.github.io/articles/not-priors/" rel="bookmark"
+         title="Permalink to Regularizers Are Not Priors">Regularizers Are Not&nbsp;Priors</a></h2>
+ 
+  </header>
+  <div class="entry-content">
+    <p>In statistics and machine learning there is an idea called <em>regularization</em>, which is when you penalize complex models in favor of simpler models rather than just finding the one model that best fits the observed data. The reason to do this is that simpler models are more likely to generalize; overly complex models can &#8220;overfit&#8221;, picking up on false patterns in the training sample that don&#8217;t hold in the larger&nbsp;population.</p>
+<p class="figure"><img alt="" src="/images/PRML_Figure1.4d.png" width="50%">
+Overfitting: the red curve is a 9th-order polynomial fit to the 9 data points in blue, which were generated according to the green curve. From Bishop&#8217;s <a href="https://www.microsoft.com/en-us/research/people/cmbishop/#!prml-book">Pattern Recognition and Machine Learning</a>.</p>
+<p>If you squint, adding regularization is sort of like having a Bayesian prior over possible models, where simpler models have more prior probability than complex models. And indeed, people often talk about it that way, for instance in scikit-learn&#8217;s documentation of <a href="lasso">Lasso</a> and <a href="elasticnet">ElasticNet</a>.</p>
+<p>But a real Bayesian prior is different! In some important ways. This confused me when I was first learning about Bayesian methods, so this post is to explain the&nbsp;difference.</p>
+<h2>Running example: regularized least-squares&nbsp;regression</h2>
+<p>Suppose we have some data consisting of pairs <span class="math">\((x_i, y_i)\)</span> and we would like to fit a model <span class="math">\(y = f(x; \theta)\)</span>.<sup id="fnref:fxtheta"><a class="footnote-ref" href="#fn:fxtheta">1</a></sup></p>
+<p>In ordinary least squares, the objective is to find the <span class="math">\(\theta\)</span> that minimizes the sum of squared&nbsp;errors:</p>
+<div class="math">$$ \hat \theta_{OLS} = \arg \min_\theta \sum_i (y_i - f(x_i; \theta))^2 $$</div>
+<p>However, this problem may produce an overfit solution or even be&nbsp;underdetermined.</p>
+<p>Regularized least squares is when you add an extra term that depends on <span class="math">\(\theta\)</span> in order to constrain the solution and make the problem more well behaved. One common form of this is L2 regularization or ridge regression, which adds a penalty term on the L2 norm of <span class="math">\(\theta\)</span>:</p>
+<div class="math">$$ \hat \theta_{Ridge} = \arg \min_\theta \left( \sum_i (y_i - f(x_i; \theta))^2 + \Vert\theta\Vert^2 \right) $$</div>
+<p>This can make sense if <span class="math">\(\theta\)</span> is a vector of coefficients; it can discourage large coefficients that happen to cancel out near the observed data points, such as in the intro&nbsp;figure.</p>
+<h2>The connection to&nbsp;probability</h2>
+<p>So far we haven&#8217;t said anything about probability. However, it turns out we can cast our modeling in a probabilistic light by interpreting the loss as a negative log&nbsp;likelihood.</p>
+<p>In particular, let&#8217;s now imagine our model is probabilistic, so that <span class="math">\(y\)</span> follows a distribution that depends on <span class="math">\(x\)</span>. If we let<sup id="fnref:gaussian"><a class="footnote-ref" href="#fn:gaussian">2</a></sup></p>
+<div class="math">$$p(y \mid x; \theta) \propto e^{-(y - f(x; \theta))^2}$$</div>
+<p>then the least squares objective from before boils down&nbsp;to</p>
+<div class="math">$$\hat\theta_{ML} = \arg \max_\theta p(y \mid x; \theta)$$</div>
+<p>This is called maximum likelihood. Pretty intuitive: find the <span class="math">\(\theta\)</span> which assigns the highest probability to the&nbsp;data.</p>
+<p>In this framework, we can incorporate the regularization term by imagining we have a prior on <span class="math">\(\theta\)</span>,</p>
+<div class="math">$$p(\theta) \propto e^{- \Vert\theta\Vert^2}$$</div>
+<p>And now we&#8217;re maximizing <span class="math">\(p(y \mid x; \theta) p(\theta)\)</span>. This is called <a href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation">maximum a posteriori estimation</a> or <span class="caps">MAP</span> for&nbsp;short.</p>
+<div class="math">$$\hat\theta_{MAP} = \arg \max_\theta p(y \mid x; \theta) p(\theta)$$</div>
+<p>This is what people mean when they say, for example, that L2 regularization corresponds to a Gaussian prior on the&nbsp;coefficients.</p>
+<p>So are we Bayes&nbsp;now?</p>
+<h2>It&#8217;s not the&nbsp;same</h2>
+<p>The biggest way in which this is different from fully Bayesian updating is that it produces a point estimate, a single value <span class="math">\(\hat\theta\)</span>.</p>
+<p>In Bayesian inference, the result of updating on new data <em>is</em> the posterior distribution of <span class="math">\(\theta\)</span>. The posterior represents your belief state after seeing the data; different points in that distribution are different possible models consistent with the data; a wider distribution means more uncertainty about the model. The posterior becomes your new prior going forward, and additional data can further inform your belief about the correct model. At no point does your belief state collapse to a single value of <span class="math">\(\theta\)</span>.</p>
+<p>Let&#8217;s say after having observed all the <span class="math">\((x_i, y_i)\)</span> we want to make a prediction at a new point <span class="math">\(x^*\)</span>.</p>
+<p>The usual thing to do, whether you&#8217;re using a regularizer or not, would be to use the <span class="math">\(\hat\theta\)</span> from your learning algorithm to predict <span class="math">\(y^* = f(x^*; \hat\theta)\)</span>.</p>
+<p>The fully Bayesian thing to do would be to integrate over your posterior distribution <span class="math">\(p(\theta \mid D)\)</span>, obtaining a <em>predictive distribution</em> on <span class="math">\(y^*\)</span>:</p>
+<div class="math">$$p(y^* \mid x^*, D) = \int p(y^* \mid x^*, \theta) p(\theta \mid D) d\theta$$</div>
+<p>This takes into account your uncertainty about <span class="math">\(\theta\)</span>, and &#8220;pushes it forward&#8221; into uncertainty about <span class="math">\(y^*\)</span>.</p>
+<p>Obviously in many cases this is a less tractable thing to do; but it does get at something that the point estimate doesn&#8217;t, and sometimes it may be worth trying to do something more like the Bayesian&nbsp;approach.</p>
+<p>Machine learning researchers have been trying to do this! Here are some blog posts about applying Bayesian techniques to deep&nbsp;models.</p>
+<ul>
+<li>Alex Kendall: <a href="https://alexgkendall.com/computer_vision/bayesian_deep_learning_for_safe_ai/">Deep Learning Is Not Good Enough, We Need Bayesian Deep Learning for Safe <span class="caps">AI</span></a>&nbsp;(2017)</li>
+<li>Yarin Gal: <a href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html">What My Deep Model Doesn&#8217;t Know</a>&nbsp;(2015)</li>
+</ul>
+<h2>More things about Bayes and&nbsp;non-Bayes</h2>
+<ul>
+<li>
+<p><span class="caps">MAP</span> estimation, the thing where you find the maximum of the posterior and go with it, is not well defined under change of variables. If you have a model parametrized by <span class="math">\(\theta\)</span>, and you decide, say, to set <span class="math">\(u = 1/\theta\)</span> and work with that instead, the posterior max <span class="math">\(\hat u_{MAP}\)</span> need not be equal to <span class="math">\(1/\hat\theta_{MAP}\)</span>.</p>
+<p>In contrast, Bayes doesn&#8217;t care what variables you choose, as long as you take care to transform your prior density function appropriately for the change of variables.<sup id="fnref:variables"><a class="footnote-ref" href="#fn:variables">3</a></sup></p>
+</li>
+<li>
+<p>If you actually look at Bayes&#8217; rule, there&#8217;s one piece we didn&#8217;t about: the normalization&nbsp;constant.</p>
+<p>
+<div class="math">$$ p(D) = \int p(D \mid \theta) p(\theta) d\theta $$</div>
+</p>
+<p>This factor is safe to ignore when optimizing over <span class="math">\(\theta\)</span>. But it has a nice interpretation: it&#8217;s the probability of seeing the data <span class="math">\(D\)</span>, averaged over the prior <span class="math">\(p(\theta)\)</span>. This is sometimes called the model evidence, and you can think of it as measuring how good your prior was in light of seeing the data. You can even use it to compare different priors.<sup id="fnref:bmc"><a class="footnote-ref" href="#fn:bmc">4</a></sup></p>
+</li>
+<li>
+<p>Probability distributions have to sum up to one. This relates to the previous point. Sometimes this doesn&#8217;t matter but sometimes it forces you to not assign more probability mass than you have. Compared to inventing a loss function out of thin air, sticking to a probabilistic framework feels to me like almost a form of type checking that rules out some things that obviously make no&nbsp;sense.</p>
+</li>
+</ul>
+<p>I hope I&#8217;ve managed to convey that Bayesian modeling really does bring more to the table and it&#8217;s not just the same as an additional term on your loss function. I often find the Bayesian answers intuitively appealing; I&#8217;m not saying it&#8217;s the appropriate tool for every problem, but it&#8217;s certainly worth learning more&nbsp;about.</p>
+<hr>
+<p>Update (April 2018): Here&#8217;s a <a href="http://raginrayguns.tumblr.com/post/163079571377/bayes-a-kinda-sorta-masterpost">post from raginrayguns on tumblr</a> that makes a similar&nbsp;point.</p>
+<blockquote>
+<p>tl;dr: Regularization is not the point of the prior. Even when we’re not regularizing, the prior is an indispensable part of useful machinery for producing “hedged” estimates, which are good in all plausible&nbsp;worlds.</p>
+</blockquote>
+<p>The post makes a case for why you might want to do the Bayesian thing, which I didn&#8217;t really say anything about here. It has an example of an estimation problem where using Bayesian reasoning produces a better estimator (according to a specified loss function, which happens to be mean squared error) than maximum likelihood, even with a flat&nbsp;prior.</p>
+<hr>
+<p>Update (February 2020): More&nbsp;links.</p>
+<p>Andrew Gordon Wilson, <a href="https://cims.nyu.edu/~andrewgw/caseforbdl/">The Case for Bayesian Deep Learning</a>: </p>
+<blockquote>
+<p>The key distinguishing property of a Bayesian approach is marginalization instead of optimization, not the prior, or Bayes rule&nbsp;[&#8230;]</p>
+</blockquote>
+<p>Thomas P. Minka, <a href="">Bayesian model averaging is not model combination</a>:</p>
+<blockquote>
+<p>Bayesian model averaging [&#8230;] answers the question: &#8220;Given that all of the data so far was generated by <em>exactly one</em> of the hypotheses, what is the probability of observing the new [data&nbsp;point]?&#8221;</p>
+</blockquote>
+<p>It&#8217;s an important caveat. A Bayesian average over a particular space of models may not describe what you are really trying to do, and it can be inferior to a non-Bayesian approach that is free to combine the same models in some other&nbsp;way.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:fxtheta">
+<p>Here, I mean that <span class="math">\(f\)</span> is some family of models parameterized by <span class="math">\(\theta\)</span>. For example, <span class="math">\(f\)</span> could be the family of 9th-order polynomials, and <span class="math">\(\theta\)</span> the coefficients of the polynomial.&#160;<a class="footnote-backref" href="#fnref:fxtheta" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:gaussian">
+<p>You may know this as the density of a <a href="https://en.wikipedia.org/wiki/Normal_distribution">Gaussian distribution</a> centered around <span class="math">\(y = f(x; \theta)\)</span>.&#160;<a class="footnote-backref" href="#fnref:gaussian" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:variables">
+<p>Max likelihood also doesn&#8217;t care, since there&#8217;s no prior at all. Also, if <span class="math">\(\theta\)</span> is discrete, then <span class="caps">MAP</span> is well defined again: it&#8217;s the one value of <span class="math">\(\theta\)</span> with the most probability mass. It&#8217;s still only as meaningful as a plurality winner though.&#160;<a class="footnote-backref" href="#fnref:variables" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:bmc">
+<p>For more on this kind of stuff, I recommend David MacKay&#8217;s textbook <a href="http://www.inference.org.uk/itila/book.html">Inference Theory, Inference, and Learning Algorithms</a>, in particular chapter 3 (&#8220;More about Inference&#8221;) and chapter 28 (&#8220;Model Comparison and Occam&#8217;s Razor&#8221;).&#160;<a class="footnote-backref" href="#fnref:bmc" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div><!-- /.entry-content -->
+  <footer class="post-info">
+    <time class="published" datetime="2018-02-22T00:00:00-05:00">
+      February 2018
+    </time>
+  </footer><!-- /.post-info -->
+    </section>
+
+    <fooder id="footer">
+      Site generated by
+      <a href="http://getpelican.com/">Pelican</a>
+      and hosted by
+      <a href="http://pages.github.com/">GitHub Pages</a>
+    </footer>
+  </body>
+</html>
